@@ -14,24 +14,17 @@
 
   .header {
     margin-top: 1.5rem;
+    margin-bottom: 1rem;
     display: flex;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: space-between;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
     width: 50%;
     height: 5rem;
     background-color: $secondary-background-color;
     border-radius: 0.5rem;
 
-    .add-btn {
-      height: 2.5rem;
-      border-radius: 1rem;
-      width: 7rem;
-      border: none;
-      outline: none;
-      color: white;
-      font-weight: bold;
-      background-color: $add-button-color;
-    }
     input {
       height: 2.5rem;
       width: 20rem;
@@ -40,8 +33,16 @@
       outline: none;
       border-radius: 1rem;
     }
-    p {
+
+    .add-btn {
+      background-color: $add-button-color;
+      border: none;
+      outline: none;
+      height: 2.5rem;
+      width: 7rem;
+      border-radius: 1rem;
       color: white;
+      font-weight: bold;
     }
   }
 

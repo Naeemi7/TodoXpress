@@ -1,3 +1,5 @@
+// AddTask.js
+
 import { useRef } from "react";
 import axios from "axios";
 
@@ -29,13 +31,13 @@ const AddTask = ({ onTaskAdded }) => {
   };
 
   return (
-    <div className="add-task-section">
-      <h2>Add New Task</h2>
-      <div className="input-container">
-        <input type="text" placeholder="Name" ref={nameRef} />
-        <input type="text" placeholder="Description" ref={descriptionRef} />
-        <button onClick={addTask}>Add Task</button>
-      </div>
+    <div className="header">
+      <input type="text" placeholder="Name" ref={nameRef} />
+      <input type="text" placeholder="Description" ref={descriptionRef} />
+
+      <button className="add-btn" onClick={addTask}>
+        Add Task
+      </button>
     </div>
   );
 };
