@@ -1,0 +1,92 @@
+@import "variables";
+
+.app {
+  /* Heading 1 style */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+  h1 {
+    text-align: center;
+    margin-top: 2.5rem;
+    font-size: 3rem;
+  }
+
+  .header {
+    margin-top: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 50%;
+    height: 5rem;
+    background-color: $secondary-background-color;
+    border-radius: 0.5rem;
+
+    .add-btn {
+      height: 2.5rem;
+      border-radius: 1rem;
+      width: 7rem;
+      border: none;
+      outline: none;
+      color: white;
+      font-weight: bold;
+      background-color: $add-button-color;
+    }
+    input {
+      height: 2.5rem;
+      width: 20rem;
+      border: none;
+      padding-left: 1rem;
+      outline: none;
+      border-radius: 1rem;
+    }
+    p {
+      color: white;
+    }
+  }
+
+  .task-container {
+    width: 50%;
+    height: 9rem;
+    background-color: $secondary-background-color;
+    border-radius: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    margin-bottom: 0.4rem;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+
+    /* Contenet Container */
+    .content-container {
+      h2 {
+        color: $add-button-color;
+      }
+      p {
+        color: #ccc;
+        font-weight: 400;
+      }
+    }
+
+    /* Button Container */
+    .button-container {
+      display: flex;
+      gap: 1.5rem;
+      cursor: pointer;
+
+      .icons {
+        font-size: 2.5rem;
+      }
+      .delete {
+        color: red;
+      }
+      .done {
+        color: green;
+      }
+      .update {
+        color: #0077ff;
+      }
+    }
+  }
+}
