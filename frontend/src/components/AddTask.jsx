@@ -1,31 +1,20 @@
 import { useRef } from "react";
-import api from "../api/axiosConfig";
+import useTaskContext from "../context/useTaskContext";
 
-const AddTask = ({ onTaskAdded }) => {
+const AddTask = () => {
   const nameRef = useRef(null);
   const descriptionRef = useRef(null);
 
-  const addTask = async () => {
-    try {
-      const taskName = nameRef.current.value;
-      const taskDescription = descriptionRef.current.value;
+  const { addTask } = useTaskContext();
 
-      const newTask = {
-        title: taskName,
-        description: taskDescription,
-      };
+  const handleAddTask = () => {
+    const taskName = nameRef.current.value;
+    const taskDescription = descriptionRef.current.value;
 
-      // Axios instance with the default base URL
-      await api.post("/tasks/create", newTask);
-
-      // Clear input fields
+    if (taskName && taskDescription) {
+      addTask(taskName, taskDescription);
       nameRef.current.value = "";
       descriptionRef.current.value = "";
-
-      // Notify the parent component that a task has been added
-      onTaskAdded();
-    } catch (error) {
-      console.error("Error occurred while creating a new task:", error);
     }
   };
 
@@ -34,7 +23,7 @@ const AddTask = ({ onTaskAdded }) => {
       <input type="text" placeholder="Task Name" ref={nameRef} />
       <input type="text" placeholder="Task Description" ref={descriptionRef} />
 
-      <button className="add-btn" onClick={addTask}>
+      <button className="add-btn" onClick={handleAddTask}>
         Add Task
       </button>
     </div>
