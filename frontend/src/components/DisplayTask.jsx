@@ -33,19 +33,16 @@ const DisplayTask = () => {
     }
   };
 
-  // Sort tasks: pending first, completed last
-  const sortedTasks = [...tasks].sort((a, b) => {
-    if (a.completed && !b.completed) return 1;
-    if (!a.completed && b.completed) return -1;
-    return 0;
-  });
+  // Separate pending and completed tasks
+  const pendingTasks = tasks.filter((item) => !item.completed);
+  const completedTasks = tasks.filter((item) => item.completed);
 
   return (
     <>
-      <div className="task-section">
-        <h3>Pending Tasks</h3>
-        {sortedTasks.map((item) =>
-          !item.completed ? (
+      {pendingTasks.length > 0 && (
+        <div className="task-section">
+          <h3>Pending Tasks</h3>
+          {pendingTasks.map((item) => (
             <div key={item._id} className="task-container pending-task">
               <div className="content-container">
                 <h2>{item.title}</h2>
@@ -67,14 +64,14 @@ const DisplayTask = () => {
                 />
               </div>
             </div>
-          ) : null
-        )}
-      </div>
+          ))}
+        </div>
+      )}
 
-      <div className="task-section">
-        <h3>Completed Tasks</h3>
-        {sortedTasks.map((item) =>
-          item.completed ? (
+      {completedTasks.length > 0 && (
+        <div className="task-section">
+          <h3>Completed Tasks</h3>
+          {completedTasks.map((item) => (
             <div key={item._id} className="task-container completed-task">
               <div className="content-container">
                 <h2 style={{ textDecoration: "line-through" }}>{item.title}</h2>
@@ -93,9 +90,9 @@ const DisplayTask = () => {
                 />
               </div>
             </div>
-          ) : null
-        )}
-      </div>
+          ))}
+        </div>
+      )}
 
       {/* Update Modal */}
       <Modal
