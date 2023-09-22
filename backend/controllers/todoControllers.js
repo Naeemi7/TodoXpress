@@ -112,3 +112,38 @@ export const updateTask = async (req, res) => {
       .json({ error: error.toString() });
   }
 };
+
+/**
+ * Find the task by ID and change the completed status to true
+ * @param {*} req
+ * @param {*} res
+ * @returns
+ */
+export const completeTask = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { completed } = req.body;
+
+    //Find the task by ID and change the complete = true
+    const completedTask = await Todo.findByIdAndUpdate(
+      id,
+      {
+        completed: true,
+      },
+      // Set this to true to updated document
+      { new: true }
+    );
+
+    if (!completedTask) {
+      return res.status(StatusCodes.NOT_FOUND).json({ message: "NOT FOUND" });
+    }
+
+    return res
+      .status(StatusCodes.OK)
+      .json({ message: "The task has been completed", completeTask });
+  } catch (error) {
+    return res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ error: error.toString() });
+  }
+};

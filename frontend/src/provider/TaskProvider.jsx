@@ -71,7 +71,22 @@ const TaskProvider = ({ children }) => {
   };
 
   /**
-   * Function to refresh the task list
+   * function to complete the task
+   * @param {*} taskId
+   */
+  const completeTask = async (taskId) => {
+    try {
+      await api.patch(`/tasks/complete/${taskId}`);
+
+      //Refresh Task
+      refreshTasks();
+    } catch (error) {
+      console.log("Error happend updating the task", error);
+    }
+  };
+
+  /**
+   * Function to refreshes the tasks
    */
   const refreshTasks = async () => {
     try {
@@ -84,7 +99,9 @@ const TaskProvider = ({ children }) => {
   };
 
   return (
-    <TaskContext.Provider value={{ tasks, addTask, deleteTask, updateTask }}>
+    <TaskContext.Provider
+      value={{ tasks, addTask, deleteTask, updateTask, completeTask }}
+    >
       {children}
     </TaskContext.Provider>
   );

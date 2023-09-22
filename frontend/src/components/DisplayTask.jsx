@@ -5,7 +5,7 @@ import { FaPenToSquare } from "react-icons/fa6";
 import { Modal, Button, Form } from "react-bootstrap";
 
 const DisplayTask = () => {
-  const { tasks, deleteTask, updateTask } = useTaskContext();
+  const { tasks, deleteTask, updateTask, completeTask } = useTaskContext();
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [selectedTask, setSelectedTask] = useState(null);
   const [updatedTitle, setUpdatedTitle] = useState("");
@@ -33,17 +33,39 @@ const DisplayTask = () => {
     }
   };
 
+  const handleCompleteTask = async (taskId) => {
+    try {
+      await completeTask(taskId);
+    } catch (error) {
+      console.error("Error happened while completing the task", error);
+    }
+  };
+
   return (
     <>
       {tasks.map((item) => (
-        <div key={item._id} className="task-container">
+        <div
+          key={item._id}
+          className={`task-container ${item.completed ? "completed" : ""}`}
+        >
           <div className="content-container">
-            <h2>{item.title}</h2>
+            <h2
+              style={item.completed ? { textDecoration: "line-through" } : {}}
+            >
+              {item.title}
+            </h2>
             <p>{item.description}</p>
             <p>{new Date(item.createdAt).toLocaleString()}</p>
           </div>
           <div className="button-container">
-            <FaCheckCircle className="icons done" />
+            {item.completed ? (
+              <FaCheckCircle className="icons done" />
+            ) : (
+              <FaCheckCircle
+                className="icons done"
+                onClick={() => handleCompleteTask(item._id)}
+              />
+            )}
             <FaTimesCircle
               className="icons delete"
               onClick={() => deleteTask(item._id)}
