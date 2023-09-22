@@ -77,3 +77,38 @@ export const deleteTask = async (req, res) => {
       .json({ error: error.toString() });
   }
 };
+
+/**
+ * Update the task
+ * @param {*} req
+ * @param {*} res
+ */
+export const updateTask = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { title, description } = req.body;
+
+    //Find the task by id and update
+    const updatedTask = await Todo.findByIdAndUpdate(
+      id, // Use id directly as the first argument
+      {
+        title,
+        description,
+      },
+      // Set this to true to updated document
+      { new: true }
+    );
+
+    if (!updatedTask) {
+      return res.status(StatusCodes.NOT_FOUND).json({ message: "NOT FOUND" });
+    }
+
+    return res
+      .status(StatusCodes.OK)
+      .json({ message: "The task has been updated", updatedTask });
+  } catch (error) {
+    return res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ error: error.toString() });
+  }
+};

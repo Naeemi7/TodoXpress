@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../api/axiosConfig";
 import { FaCheckCircle, FaTimesCircle } from "react-icons/fa";
 import { FaPenToSquare } from "react-icons/fa6";
 
@@ -9,7 +9,8 @@ const DisplayTask = ({ onDeleteTask }) => {
   useEffect(() => {
     const fetchAllTasks = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/tasks");
+        //Axios instance with the default base URL
+        const response = await api.get("/tasks");
         const { data } = response;
         setTasks(data.tasks);
       } catch (error) {

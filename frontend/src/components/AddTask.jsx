@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import axios from "axios";
+import api from "../api/axiosConfig";
 
 const AddTask = ({ onTaskAdded }) => {
   const nameRef = useRef(null);
@@ -15,7 +15,8 @@ const AddTask = ({ onTaskAdded }) => {
         description: taskDescription,
       };
 
-      await axios.post("http://localhost:5000/api/tasks/create", newTask);
+      // Axios instance with the default base URL
+      await api.post("/tasks/create", newTask);
 
       // Clear input fields
       nameRef.current.value = "";
@@ -30,8 +31,8 @@ const AddTask = ({ onTaskAdded }) => {
 
   return (
     <div className="header">
-      <input type="text" placeholder="Name" ref={nameRef} />
-      <input type="text" placeholder="Description" ref={descriptionRef} />
+      <input type="text" placeholder="Task Name" ref={nameRef} />
+      <input type="text" placeholder="Task Description" ref={descriptionRef} />
 
       <button className="add-btn" onClick={addTask}>
         Add Task
