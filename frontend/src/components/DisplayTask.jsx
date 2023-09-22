@@ -55,7 +55,16 @@ const DisplayTask = () => {
               {item.title}
             </h2>
             <p>{item.description}</p>
-            <p>{new Date(item.createdAt).toLocaleString()}</p>
+            <p>
+              {new Date(item.createdAt).toLocaleString(undefined, {
+                day: "numeric",
+                month: "long",
+                year: "numeric",
+                hour: "numeric",
+                minute: "numeric",
+                second: "numeric",
+              })}
+            </p>
           </div>
           <div className="button-container">
             {item.completed ? (
