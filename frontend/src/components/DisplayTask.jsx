@@ -11,6 +11,19 @@ const DisplayTask = () => {
   const [updatedTitle, setUpdatedTitle] = useState("");
   const [updatedDescription, setUpdatedDescription] = useState("");
 
+  // Function to format a date as Month (string), day, year, and time
+  const formatDate = (date) => {
+    const options = {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    };
+    return new Date(date).toLocaleString(undefined, options);
+  };
+
   const toggleUpdateModal = (task) => {
     setSelectedTask(task);
     setUpdatedTitle(task.title);
@@ -47,7 +60,7 @@ const DisplayTask = () => {
               <div className="content-container">
                 <h2>{item.title}</h2>
                 <p>{item.description}</p>
-                <p>{new Date(item.createdAt).toLocaleString()}</p>
+                <p>{formatDate(item.createdAt)}</p> {/* Format the date */}
               </div>
               <div className="button-container">
                 <FaCheckCircle
@@ -76,7 +89,7 @@ const DisplayTask = () => {
               <div className="content-container">
                 <h2 style={{ textDecoration: "line-through" }}>{item.title}</h2>
                 <p>{item.description}</p>
-                <p>{new Date(item.createdAt).toLocaleString()}</p>
+                <p>{formatDate(item.createdAt)}</p> {/* Format the date */}
               </div>
               <div className="button-container">
                 <FaCheckCircle className="icons done" />

@@ -13,7 +13,6 @@ export const createTask = async (req, res) => {
     const newTask = await Todo.create({
       title,
       description,
-      dueDate,
     });
 
     return res

@@ -18,11 +18,6 @@ const TaskProvider = ({ children }) => {
     fetchAllTasks();
   }, []);
 
-  /**
-   * Function to add a new task
-   * @param {string} taskName
-   * @param {string} taskDescription
-   */
   const addTask = async (taskName, taskDescription) => {
     try {
       const newTask = {
@@ -30,7 +25,11 @@ const TaskProvider = ({ children }) => {
         description: taskDescription,
       };
 
-      await api.post("/tasks/create", newTask);
+      await api.post("/addTask", newTask, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
       // Refresh tasks
       refreshTasks();
@@ -39,13 +38,13 @@ const TaskProvider = ({ children }) => {
     }
   };
 
-  /**
-   * Function to delete a task
-   * @param {string} taskId
-   */
   const deleteTask = async (taskId) => {
     try {
-      await api.delete(`/tasks/delete/${taskId}`);
+      await api.delete(`/deleteTask/${taskId}`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
       // Refresh tasks
       refreshTasks();
@@ -54,14 +53,13 @@ const TaskProvider = ({ children }) => {
     }
   };
 
-  /**
-   * Function to update a task
-   * @param {string} taskId
-   * @param {object} updatedTask - An object containing the updated task details (title and description)
-   */
   const updateTask = async (taskId, updatedTask) => {
     try {
-      await api.put(`/tasks/update/${taskId}`, updatedTask);
+      await api.put(`/updateTask/${taskId}`, updatedTask, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
       // Refresh tasks
       refreshTasks();
@@ -70,24 +68,21 @@ const TaskProvider = ({ children }) => {
     }
   };
 
-  /**
-   * function to complete the task
-   * @param {*} taskId
-   */
   const completeTask = async (taskId) => {
     try {
-      await api.patch(`/tasks/complete/${taskId}`);
+      await api.patch(`/completeTask/${taskId}`, null, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-      //Refresh Task
+      // Refresh Task
       refreshTasks();
     } catch (error) {
-      console.log("Error happend updating the task", error);
+      console.log("Error happened updating the task", error);
     }
   };
 
-  /**
-   * Function to refreshes the tasks
-   */
   const refreshTasks = async () => {
     try {
       const response = await api.get("/tasks");
