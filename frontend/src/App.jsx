@@ -3,7 +3,7 @@ import "./styles/App.scss";
 import "bootstrap/dist/css/bootstrap.min.css";
 import DisplayTask from "./components/DisplayTask";
 import AddTask from "./components/AddTask";
-import axios from "axios";
+import api from "./api/axiosConfig";
 
 function App() {
   const [taskAdded, setTaskAdded] = useState(false);
@@ -14,7 +14,8 @@ function App() {
 
   const handleDeleteTask = async (taskId) => {
     try {
-      await axios.delete(`http://localhost:5000/api/tasks/delete/${taskId}`);
+      // Axios instance with the default base URL
+      await api.delete(`/tasks/delete/${taskId}`);
       handleTaskAdded(); // Refresh the task list after deletion
     } catch (error) {
       console.error("Error happened deleting the task", error);
