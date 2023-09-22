@@ -49,3 +49,31 @@ export const getAllTasks = async (req, res) => {
       .json({ error: error.toString() });
   }
 };
+
+/**
+ * Delete the Task
+ * @param {*} req
+ * @param {*} res
+ */
+export const deleteTask = async (req, res) => {
+  try {
+    const { id } = req.params; // Use req.params to get the task ID from the URL
+
+    // Find and delete the task by ID
+    const deletedTask = await Todo.findByIdAndDelete(id);
+
+    if (!deletedTask) {
+      return res
+        .status(StatusCodes.NOT_FOUND)
+        .json({ message: "Task not found" });
+    }
+
+    return res
+      .status(StatusCodes.OK)
+      .json({ message: "The task has been deleted", deletedTask });
+  } catch (error) {
+    return res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ error: error.toString() });
+  }
+};
