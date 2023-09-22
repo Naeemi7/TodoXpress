@@ -1,7 +1,7 @@
 // styles.scss
 @import "variables";
-@import "media-query";
 
+/* Style of the app */
 .app {
   /* Heading 1 style */
   display: flex;
@@ -23,7 +23,7 @@
     padding-left: 3rem;
     padding-right: 3rem;
     width: 50%;
-    height: 5rem;
+    height: 6rem;
     background-color: $secondary-background-color;
     border-radius: 0.5rem;
 
@@ -50,7 +50,7 @@
 
   .task-section {
     width: 50%;
-    margin-top: 2rem;
+    margin-top: 1.5rem;
 
     h3 {
       color: $add-button-color;
@@ -106,6 +106,212 @@
       &.pending-task {
         background-color: $secondary-background-color;
       }
+    }
+  }
+}
+
+/* Media query section */
+@media (max-width: #{$small}) {
+  .app {
+    width: 100%;
+
+    h1 {
+      margin-top: 1.5rem;
+      font-size: 2.5rem;
+    }
+
+    .header {
+      width: 100%;
+      height: 12rem;
+      padding-left: 0;
+      padding-right: 0;
+      margin-left: 0;
+      flex-direction: column;
+      justify-content: center;
+      gap: 1rem;
+
+      input {
+        width: 17rem;
+        height: 2rem;
+      }
+
+      .add-btn {
+        height: 2.1rem;
+        font-size: 1rem;
+        width: 6rem;
+      }
+    }
+
+    .task-section {
+      padding: 1.5rem;
+      width: 100%;
+      margin-top: 0;
+
+      .task-container {
+        padding: 1rem;
+
+        .content-container {
+          h2 {
+            font-size: 1.3rem;
+          }
+          p {
+            font-size: 0.9rem;
+          }
+        }
+
+        .button-container {
+          display: flex;
+          flex-direction: column;
+          gap: 0.8rem;
+
+          .icons {
+            font-size: 1.5rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (min-width: 601px) and (max-width: #{$medium}) {
+  .app {
+    width: 100%;
+
+    h1 {
+      margin-top: 1.5rem;
+      font-size: 2.5rem;
+    }
+
+    .header {
+      width: 100%;
+      height: 12rem;
+      padding-left: 0;
+      padding-right: 0;
+      margin-left: 0;
+      flex-direction: column;
+      justify-content: center;
+      gap: 1rem;
+
+      input {
+        width: 17rem;
+        height: 2rem;
+      }
+
+      .add-btn {
+        height: 2.1rem;
+        font-size: 1rem;
+        width: 6rem;
+      }
+    }
+
+    .task-section {
+      padding: 1.5rem;
+      width: 100%;
+      margin-top: 0;
+
+      .task-container {
+        padding: 1rem;
+
+        .content-container {
+          h2 {
+            font-size: 1.3rem;
+          }
+          p {
+            font-size: 0.9rem;
+          }
+        }
+
+        .button-container {
+          display: flex;
+          flex-direction: column;
+          gap: 0.8rem;
+
+          .icons {
+            font-size: 1.5rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (min-width: 801px) and (max-width: #{$large}) {
+  .app {
+    width: 100%;
+
+    h1 {
+      margin-top: 3rem;
+      font-size: 2.7rem;
+    }
+
+    .header {
+      width: 95%;
+      height: 12rem;
+      padding-left: 0;
+      padding-right: 0;
+      margin-left: 0;
+      flex-direction: column;
+      justify-content: center;
+      gap: 1rem;
+
+      input {
+        width: 20rem;
+        height: 2.5rem;
+      }
+
+      .add-btn {
+        height: 2.5rem;
+        font-size: 1rem;
+        width: 7rem;
+      }
+    }
+
+    .task-section {
+      padding: 1.5rem;
+      width: 100%;
+      margin-top: 0;
+
+      .task-container {
+        padding: 1rem;
+
+        .content-container {
+          h2 {
+            font-size: 1.5rem;
+          }
+          p {
+            font-size: 1.2rem;
+          }
+        }
+
+        .button-container {
+          display: flex;
+          flex-direction: column;
+          gap: 0.8rem;
+
+          .icons {
+            font-size: 1.7rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (min-width: 1025px) and (max-width: #{$xlarge}) {
+  .app {
+    width: 100%;
+
+    h1 {
+      margin-top: 3rem;
+      font-size: 2.7rem;
+    }
+
+    .header {
+      width: 60%;
+    }
+
+    .task-section {
+      width: 60%;
     }
   }
 }
