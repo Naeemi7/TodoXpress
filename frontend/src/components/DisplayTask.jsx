@@ -33,59 +33,69 @@ const DisplayTask = () => {
     }
   };
 
-  const handleCompleteTask = async (taskId) => {
-    try {
-      await completeTask(taskId);
-    } catch (error) {
-      console.error("Error happened while completing the task", error);
-    }
-  };
+  // Sort tasks: pending first, completed last
+  const sortedTasks = [...tasks].sort((a, b) => {
+    if (a.completed && !b.completed) return 1;
+    if (!a.completed && b.completed) return -1;
+    return 0;
+  });
 
   return (
     <>
-      {tasks.map((item) => (
-        <div
-          key={item._id}
-          className={`task-container ${item.completed ? "completed" : ""}`}
-        >
-          <div className="content-container">
-            <h2
-              style={item.completed ? { textDecoration: "line-through" } : {}}
-            >
-              {item.title}
-            </h2>
-            <p>{item.description}</p>
-            <p>
-              {new Date(item.createdAt).toLocaleString(undefined, {
-                day: "numeric",
-                month: "long",
-                year: "numeric",
-                hour: "numeric",
-                minute: "numeric",
-                second: "numeric",
-              })}
-            </p>
-          </div>
-          <div className="button-container">
-            {item.completed ? (
-              <FaCheckCircle className="icons done" />
-            ) : (
-              <FaCheckCircle
-                className="icons done"
-                onClick={() => handleCompleteTask(item._id)}
-              />
-            )}
-            <FaTimesCircle
-              className="icons delete"
-              onClick={() => deleteTask(item._id)}
-            />
-            <FaPenToSquare
-              className="icons update"
-              onClick={() => toggleUpdateModal(item)}
-            />
-          </div>
-        </div>
-      ))}
+      <div className="task-section">
+        <h3>Pending Tasks</h3>
+        {sortedTasks.map((item) =>
+          !item.completed ? (
+            <div key={item._id} className="task-container pending-task">
+              <div className="content-container">
+                <h2>{item.title}</h2>
+                <p>{item.description}</p>
+                <p>{new Date(item.createdAt).toLocaleString()}</p>
+              </div>
+              <div className="button-container">
+                <FaCheckCircle
+                  className="icons done"
+                  onClick={() => completeTask(item._id)}
+                />
+                <FaTimesCircle
+                  className="icons delete"
+                  onClick={() => deleteTask(item._id)}
+                />
+                <FaPenToSquare
+                  className="icons update"
+                  onClick={() => toggleUpdateModal(item)}
+                />
+              </div>
+            </div>
+          ) : null
+        )}
+      </div>
+
+      <div className="task-section">
+        <h3>Completed Tasks</h3>
+        {sortedTasks.map((item) =>
+          item.completed ? (
+            <div key={item._id} className="task-container completed-task">
+              <div className="content-container">
+                <h2 style={{ textDecoration: "line-through" }}>{item.title}</h2>
+                <p>{item.description}</p>
+                <p>{new Date(item.createdAt).toLocaleString()}</p>
+              </div>
+              <div className="button-container">
+                <FaCheckCircle className="icons done" />
+                <FaTimesCircle
+                  className="icons delete"
+                  onClick={() => deleteTask(item._id)}
+                />
+                <FaPenToSquare
+                  className="icons update"
+                  onClick={() => toggleUpdateModal(item)}
+                />
+              </div>
+            </div>
+          ) : null
+        )}
+      </div>
 
       {/* Update Modal */}
       <Modal

@@ -1,3 +1,4 @@
+// styles.scss
 @import "variables";
 @import "media-query";
 
@@ -47,47 +48,63 @@
     }
   }
 
-  .task-container {
+  .task-section {
     width: 50%;
-    height: 9rem;
-    background-color: $secondary-background-color;
-    border-radius: 0.5rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-left: 2rem;
-    padding-right: 2rem;
-    margin-bottom: 0.4rem;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    margin-top: 2rem;
 
-    /* Contenet Container */
-    .content-container {
-      h2 {
-        color: $add-button-color;
-      }
-      p {
-        color: #ccc;
-        font-weight: 400;
-      }
+    h3 {
+      color: $add-button-color;
     }
 
-    /* Button Container */
-    .button-container {
+    .task-container {
+      height: 9rem;
+      background-color: $secondary-background-color;
+      border-radius: 0.5rem;
       display: flex;
-      gap: 1.5rem;
-      cursor: pointer;
+      justify-content: space-between;
+      align-items: center;
+      padding-left: 2rem;
+      padding-right: 2rem;
+      margin-bottom: 0.4rem;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 
-      .icons {
-        font-size: 2.5rem;
+      /* Content Container */
+      .content-container {
+        h2 {
+          color: $add-button-color;
+        }
+        p {
+          color: #ccc;
+          font-weight: 400;
+        }
       }
-      .delete {
-        color: red;
+
+      /* Button Container */
+      .button-container {
+        display: flex;
+        gap: 1.5rem;
+        cursor: pointer;
+
+        .icons {
+          font-size: 2.5rem;
+        }
+        .delete {
+          color: red;
+        }
+        .done {
+          color: green;
+        }
+        .update {
+          color: #0077ff;
+        }
       }
-      .done {
-        color: green;
+
+      &.completed-task {
+        background-color: #2f4f4f;
       }
-      .update {
-        color: #0077ff;
+
+      &.pending-task {
+        background-color: $secondary-background-color;
       }
     }
   }
