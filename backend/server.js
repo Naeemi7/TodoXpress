@@ -8,14 +8,17 @@ import todoRoutes from "./routes/todoRoutes.js";
 dotenv.config();
 
 const app = express();
-
-// Set defaul Cors headers
-app.use(cors());
+const port = process.env.PORT || 3000;
 
 // Parse the Json body to req.body
 app.use(express.json());
 
-const port = 5000;
+const corsOption = {
+  origin: "*", // You might want to restrict this to specific origins in a production environment.
+  methods: ["HEAD", "GET", "POST", "PATCH", "DELETE", "PUT"],
+};
+
+app.use(cors(corsOption));
 
 // Conneting to mongoDB
 mongoose
