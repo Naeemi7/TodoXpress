@@ -49,7 +49,7 @@ const TaskProvider = ({ children }) => {
 
   const deleteTask = async (taskId) => {
     try {
-      await api.delete(`/deleteTask/${taskId}`, {
+      await api.delete(`/deleteTask${taskId}`, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -64,7 +64,7 @@ const TaskProvider = ({ children }) => {
 
   const updateTask = async (taskId, updatedTask) => {
     try {
-      await api.put(`/updateTask/${taskId}`, updatedTask, {
+      await api.put(`/updateTask${taskId}`, updatedTask, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -79,7 +79,7 @@ const TaskProvider = ({ children }) => {
 
   const completeTask = async (taskId) => {
     try {
-      await api.patch(`/completeTask/${taskId}`, null, {
+      await api.patch(`/completeTask${taskId}`, null, {
         headers: {
           "Content-Type": "application/json",
         },
