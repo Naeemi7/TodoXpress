@@ -50,6 +50,7 @@ const TaskProvider = ({ children }) => {
     }
   };
 
+  // For Delete Task
   const deleteTask = async (taskId) => {
     try {
       await api.delete(`/deleteTask/${taskId}`, {
@@ -65,6 +66,7 @@ const TaskProvider = ({ children }) => {
     }
   };
 
+  // For Update Task
   const updateTask = async (taskId, updatedTask) => {
     try {
       await api.put(`/updateTask/${taskId}`, updatedTask, {
@@ -80,6 +82,7 @@ const TaskProvider = ({ children }) => {
     }
   };
 
+  // For Mark Task as Done
   const completeTask = async (taskId) => {
     try {
       await api.patch(`/completeTask/${taskId}`, null, {
@@ -91,10 +94,9 @@ const TaskProvider = ({ children }) => {
       // Refresh Task
       refreshTasks();
     } catch (error) {
-      setError("Error happened updating the task");
+      setError("Error happened marking the task as done");
     }
   };
-
   const refreshTasks = async () => {
     try {
       const response = await api.get("/getAllTask", {
