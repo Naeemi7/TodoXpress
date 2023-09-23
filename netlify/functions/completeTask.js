@@ -1,6 +1,8 @@
 const connectToDatabase = require("./dbConnection.js");
 const Todo = require("./Todo.js");
+const dotenv = require("dotenv");
 
+dotenv.config();
 exports.handler = async (event, context) => {
   context.callbackWaitsForEmptyEventLoop = false;
 
