@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import api from "../api/axiosConfig";
 import TaskContext from "../context/TaskContext";
 
@@ -8,7 +8,12 @@ const TaskProvider = ({ children }) => {
   useEffect(() => {
     const fetchAllTasks = async () => {
       try {
-        const response = await api.get("/tasks");
+        const response = await api.get("/getAllTask", {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
         const { data } = response;
         setTasks(data.tasks);
       } catch (error) {
@@ -85,7 +90,11 @@ const TaskProvider = ({ children }) => {
 
   const refreshTasks = async () => {
     try {
-      const response = await api.get("/tasks");
+      const response = await api.get("/getAllTask", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
       const { data } = response;
       setTasks(data.tasks);
     } catch (error) {
