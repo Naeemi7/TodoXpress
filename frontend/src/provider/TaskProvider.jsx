@@ -14,8 +14,11 @@ const TaskProvider = ({ children }) => {
           },
         });
 
-        const { data } = response;
-        setTasks(data.tasks);
+        if (response && response.data && response.data.tasks) {
+          setTasks(response.data.tasks);
+        } else {
+          console.error("Data structure from the server is incorrect");
+        }
       } catch (error) {
         console.error("Error happened fetching data", error);
       }
