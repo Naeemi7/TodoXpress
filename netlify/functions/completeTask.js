@@ -1,7 +1,5 @@
-const { default: mongoose } = require("mongoose");
-const connectToDatabase = require("./dbConnection.js");
 const mongoose = require("mongoose");
-
+const connectToDatabase = require("./dbConnection.js");
 const Todo = require("./Todo.js");
 const dotenv = require("dotenv");
 
