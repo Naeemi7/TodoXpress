@@ -44,6 +44,7 @@ const DisplayTask = () => {
       setShowUpdateModal(false);
     } catch (error) {
       console.error("Error happened while updating the task", error);
+      // You can display an error message to the user here if needed
     }
   };
 
@@ -53,8 +54,7 @@ const DisplayTask = () => {
 
   return (
     <>
-      {error && <div className="error">{error}</div>}{" "}
-      {/* Display error if exists */}
+      {error && <div className="error">{error}</div>}
       {pendingTasks.length > 0 && (
         <div className="task-section">
           <h3>Pending Tasks</h3>
@@ -63,7 +63,7 @@ const DisplayTask = () => {
               <div className="content-container">
                 <h2>{item.title}</h2>
                 <p>{item.description}</p>
-                <p>{formatDate(item.createdAt)}</p> {/* Format the date */}
+                <p>{formatDate(item.createdAt)}</p>
               </div>
               <div className="button-container">
                 <FaCheckCircle
@@ -91,7 +91,7 @@ const DisplayTask = () => {
               <div className="content-container">
                 <h2 style={{ textDecoration: "line-through" }}>{item.title}</h2>
                 <p>{item.description}</p>
-                <p>{formatDate(item.createdAt)}</p> {/* Format the date */}
+                <p>{formatDate(item.createdAt)}</p>
               </div>
               <div className="button-container">
                 <FaCheckCircle className="icons done" />
@@ -108,7 +108,6 @@ const DisplayTask = () => {
           ))}
         </div>
       )}
-      {/* Update Modal */}
       <Modal
         show={showUpdateModal}
         onHide={() => setShowUpdateModal(false)}

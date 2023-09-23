@@ -23,7 +23,7 @@ const TaskProvider = ({ children }) => {
           setError("Data structure from the server is incorrect");
         }
       } catch (error) {
-        setError("Error happened fetching data");
+        setError("Error happened fetching data: " + error.message);
       }
     };
 
@@ -46,7 +46,7 @@ const TaskProvider = ({ children }) => {
       // Refresh tasks
       refreshTasks();
     } catch (error) {
-      setError("Error occurred while creating a new task");
+      setError("Error occurred while creating a new task: " + error.message);
     }
   };
 
@@ -62,7 +62,7 @@ const TaskProvider = ({ children }) => {
       // Refresh tasks
       refreshTasks();
     } catch (error) {
-      setError("Error happened deleting the task");
+      setError("Error happened deleting the task: " + error.message);
     }
   };
 
@@ -78,7 +78,7 @@ const TaskProvider = ({ children }) => {
       // Refresh tasks
       refreshTasks();
     } catch (error) {
-      setError("Error happened updating the task");
+      setError("Error happened updating the task: " + error.message);
     }
   };
 
@@ -94,9 +94,10 @@ const TaskProvider = ({ children }) => {
       // Refresh Task
       refreshTasks();
     } catch (error) {
-      setError("Error happened marking the task as done");
+      setError("Error happened marking the task as done: " + error.message);
     }
   };
+
   const refreshTasks = async () => {
     try {
       const response = await api.get("/getAllTask", {
@@ -112,7 +113,7 @@ const TaskProvider = ({ children }) => {
         setError("Data structure from the server is incorrect during refresh");
       }
     } catch (error) {
-      setError("Error happened fetching data during refresh");
+      setError("Error happened fetching data during refresh: " + error.message);
     }
   };
 

@@ -14,6 +14,7 @@ exports.handler = async (event, context) => {
     const { id } = JSON.parse(event.body);
     const taskId = mongoose.Types.ObjectId(id);
 
+    // Use the same logic as your backend controller to delete the task
     const deletedTask = await Todo.findByIdAndDelete(taskId);
 
     if (!deletedTask) {
@@ -23,6 +24,7 @@ exports.handler = async (event, context) => {
       };
     }
 
+    console.log(deletedTask);
     return {
       statusCode: 200,
       headers: {

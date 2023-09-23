@@ -14,6 +14,7 @@ exports.handler = async (event, context) => {
     const { id } = JSON.parse(event.body);
     const taskId = mongoose.Types.ObjectId(id);
 
+    // Use the same logic as your backend controller to mark the task as complete
     const completedTask = await Todo.findByIdAndUpdate(
       taskId,
       {
@@ -29,6 +30,7 @@ exports.handler = async (event, context) => {
       };
     }
 
+    console.log(completedTask);
     return {
       statusCode: 200,
       headers: {

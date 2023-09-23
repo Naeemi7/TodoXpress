@@ -21,6 +21,7 @@ exports.handler = async (event, context) => {
       };
     }
 
+    // Use the same logic as your backend controller to update the task
     const updatedTask = await Todo.findByIdAndUpdate(
       taskId,
       {
@@ -37,6 +38,7 @@ exports.handler = async (event, context) => {
       };
     }
 
+    console.log(updatedTask);
     return {
       statusCode: 200,
       headers: {
@@ -46,7 +48,7 @@ exports.handler = async (event, context) => {
           "Origin, X-Requested-With, Content-Type, Accept",
       },
       body: JSON.stringify({
-        message: "Task is marked as done",
+        message: "Task is updated",
         updatedTask,
       }),
     };
