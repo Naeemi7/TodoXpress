@@ -11,8 +11,9 @@ exports.handler = async (event, context) => {
     await connectToDatabase();
     console.log("Received event body: ", event.body);
     const { id } = JSON.parse(event.body);
+    const taskId = mongoose.Types.ObjectId(id);
 
-    const deletedTask = await Todo.findByIdAndDelete(id);
+    const deletedTask = await Todo.findByIdAndDelete(taskId);
 
     if (!deletedTask) {
       return {

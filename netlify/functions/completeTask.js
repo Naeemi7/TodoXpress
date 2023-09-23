@@ -1,3 +1,4 @@
+const { default: mongoose } = require("mongoose");
 const connectToDatabase = require("./dbConnection.js");
 const Todo = require("./Todo.js");
 const dotenv = require("dotenv");
@@ -9,9 +10,10 @@ exports.handler = async (event, context) => {
     await connectToDatabase();
     console.log("Received event body: ", event.body);
     const { id } = JSON.parse(event.body);
+    const taskId = mongoose.Types.ObjectId(id);
 
     const completedTask = await Todo.findByIdAndUpdate(
-      id,
+      taskId,
       {
         completed: true,
       },

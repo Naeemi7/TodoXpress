@@ -10,7 +10,7 @@ exports.handler = async (event, context) => {
     console.log("Received event body: ", event.body);
     const { title, description } = JSON.parse(event.body);
 
-    if (!body.body) {
+    if (!title) {
       return {
         statusCode: 400,
         body: JSON.stringify({ message: "Title is required" }),

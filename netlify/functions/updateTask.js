@@ -9,6 +9,7 @@ exports.handler = async (event, context) => {
     await connectToDatabase();
     console.log("Received event body: ", event.body);
     const { id, title, description } = JSON.parse(event.body);
+    const taskId = mongoose.Types.ObjectId(id);
 
     if (!title) {
       return {
@@ -18,7 +19,7 @@ exports.handler = async (event, context) => {
     }
 
     const updatedTask = await Todo.findByIdAndUpdate(
-      id,
+      taskId,
       {
         title,
         description,
