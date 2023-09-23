@@ -23,6 +23,7 @@ const TaskProvider = ({ children }) => {
         console.error("Error happened fetching data", error);
       }
     };
+
     fetchAllTasks();
   }, []);
 
