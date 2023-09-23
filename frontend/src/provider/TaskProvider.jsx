@@ -34,7 +34,7 @@ const TaskProvider = ({ children }) => {
         description: taskDescription,
       };
 
-      await api.post("/createTask", newTask, {
+      await api.post("/addTask", newTask, {
         headers: {
           "Content-Type": "application/json",
         },
