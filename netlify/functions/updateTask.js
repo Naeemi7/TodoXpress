@@ -1,5 +1,7 @@
 const connectToDatabase = require("./dbConnection.js");
 const Todo = require("./Todo.js");
+const mongoose = require("mongoose");
+
 const dotenv = require("dotenv");
 
 dotenv.config();

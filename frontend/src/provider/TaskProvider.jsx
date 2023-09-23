@@ -52,11 +52,11 @@ const TaskProvider = ({ children }) => {
 
   const deleteTask = async (taskId) => {
     try {
-      await api.delete(`/deleteTask/${taskId} , {
+      await api.delete(`/deleteTask/${taskId}`, {
         headers: {
           "Content-Type": "application/json",
         },
-      }`);
+      });
 
       // Refresh tasks
       refreshTasks();
