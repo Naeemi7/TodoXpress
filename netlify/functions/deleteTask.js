@@ -10,16 +10,9 @@ exports.handler = async (event, context) => {
   try {
     await connectToDatabase();
     console.log("Received event body: ", event.body);
-    const body = JSON.parse(event.body);
+    const { id } = JSON.parse(event.body);
 
-    if (!body.id) {
-      return {
-        statusCode: 400,
-        body: JSON.stringify({ message: "ID is required" }),
-      };
-    }
-
-    const deletedTask = await Todo.findByIdAndDelete(body.id);
+    const deletedTask = await Todo.findByIdAndDelete(id);
 
     if (!deletedTask) {
       return {

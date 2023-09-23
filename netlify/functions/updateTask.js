@@ -4,11 +4,18 @@ const dotenv = require("dotenv");
 
 dotenv.config();
 
-const handler = async (event, context) => {
+exports.handler = async (event, context) => {
   try {
     await connectToDatabase();
     console.log("Received event body: ", event.body);
     const { id, title, description } = JSON.parse(event.body);
+
+    if (!title) {
+      return {
+        statusCode: 400,
+        body: JSON.stringify({ message: "Title is required" }),
+      };
+    }
 
     const updatedTask = await Todo.findByIdAndUpdate(
       id,
@@ -21,8 +28,8 @@ const handler = async (event, context) => {
 
     if (!updatedTask) {
       return {
-        statusCode: 400,
-        body: JSON.stringify({ message: "Request body is empty" }),
+        statusCode: 404,
+        body: JSON.stringify({ message: "Task not found" }),
       };
     }
 
@@ -39,4 +46,3 @@ const handler = async (event, context) => {
     };
   }
 };
-module.exports = { handler };

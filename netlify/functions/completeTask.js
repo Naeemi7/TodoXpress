@@ -3,6 +3,7 @@ const Todo = require("./Todo.js");
 const dotenv = require("dotenv");
 
 dotenv.config();
+
 exports.handler = async (event, context) => {
   try {
     await connectToDatabase();
@@ -26,7 +27,10 @@ exports.handler = async (event, context) => {
 
     return {
       statusCode: 200,
-      body: JSON.stringify({ message: "Task is updated", completedTask }),
+      body: JSON.stringify({
+        message: "Task is marked as done",
+        completedTask,
+      }),
     };
   } catch (error) {
     console.error("Error completing task:", error);
