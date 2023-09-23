@@ -3,7 +3,6 @@ const Todo = require("./Todo.js");
 const dotenv = require("dotenv");
 
 dotenv.config();
-
 exports.handler = async (event, context) => {
   context.callbackWaitsForEmptyEventLoop = false;
 
@@ -22,7 +21,7 @@ exports.handler = async (event, context) => {
 
     return {
       statusCode: 200,
-      body: JSON.stringify(tasks),
+      body: JSON.stringify({ message: "Tasks Found", tasks }),
     };
   } catch (error) {
     console.error("Error happened:", error);

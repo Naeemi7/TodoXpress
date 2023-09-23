@@ -7,17 +7,10 @@ exports.handler = async (event, context) => {
   try {
     await connectToDatabase();
     console.log("Received event body: ", event.body);
-    const body = JSON.parse(event.body);
-
-    if (!body.id) {
-      return {
-        statusCode: 400,
-        body: JSON.stringify({ message: "ID is required" }),
-      };
-    }
+    const { id } = JSON.parse(event.body);
 
     const completedTask = await Todo.findByIdAndUpdate(
-      body.id,
+      id,
       {
         completed: true,
       },
