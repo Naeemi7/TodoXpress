@@ -5,7 +5,8 @@ import { FaPenToSquare } from "react-icons/fa6";
 import { Modal, Button, Form } from "react-bootstrap";
 
 const DisplayTask = () => {
-  const { tasks, deleteTask, updateTask, completeTask } = useTaskContext();
+  const { tasks, deleteTask, updateTask, completeTask, error } =
+    useTaskContext();
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [selectedTask, setSelectedTask] = useState(null);
   const [updatedTitle, setUpdatedTitle] = useState("");
@@ -52,6 +53,8 @@ const DisplayTask = () => {
 
   return (
     <>
+      {error && <div className="error">{error}</div>}{" "}
+      {/* Display error if exists */}
       {pendingTasks.length > 0 && (
         <div className="task-section">
           <h3>Pending Tasks</h3>
@@ -80,7 +83,6 @@ const DisplayTask = () => {
           ))}
         </div>
       )}
-
       {completedTasks.length > 0 && (
         <div className="task-section">
           <h3>Completed Tasks</h3>
@@ -106,7 +108,6 @@ const DisplayTask = () => {
           ))}
         </div>
       )}
-
       {/* Update Modal */}
       <Modal
         show={showUpdateModal}

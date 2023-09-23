@@ -4,6 +4,7 @@ import TaskContext from "../context/TaskContext";
 
 const TaskProvider = ({ children }) => {
   const [tasks, setTasks] = useState([]);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchAllTasks = async () => {
@@ -17,14 +18,15 @@ const TaskProvider = ({ children }) => {
         if (response && response.data && Array.isArray(response.data.tasks)) {
           // Check if response.data.tasks is an array
           setTasks(response.data.tasks);
+          setError(null); // Clear any previous errors
         } else {
-          console.error("Data structure from the server is incorrect");
-          // Handle the incorrect data structure here, e.g., display an error message or log it.
+          setError("Data structure from the server is incorrect");
         }
       } catch (error) {
-        console.error("Error happened fetching data", error);
+        setError("Error happened fetching data");
       }
     };
+
     fetchAllTasks();
   }, []);
 
@@ -44,7 +46,7 @@ const TaskProvider = ({ children }) => {
       // Refresh tasks
       refreshTasks();
     } catch (error) {
-      console.error("Error occurred while creating a new task:", error);
+      setError("Error occurred while creating a new task");
     }
   };
 
@@ -59,7 +61,7 @@ const TaskProvider = ({ children }) => {
       // Refresh tasks
       refreshTasks();
     } catch (error) {
-      console.error("Error happened deleting the task", error);
+      setError("Error happened deleting the task");
     }
   };
 
@@ -74,7 +76,7 @@ const TaskProvider = ({ children }) => {
       // Refresh tasks
       refreshTasks();
     } catch (error) {
-      console.error("Error happened updating the task", error);
+      setError("Error happened updating the task");
     }
   };
 
@@ -89,7 +91,7 @@ const TaskProvider = ({ children }) => {
       // Refresh Task
       refreshTasks();
     } catch (error) {
-      console.log("Error happened updating the task", error);
+      setError("Error happened updating the task");
     }
   };
 
@@ -101,15 +103,20 @@ const TaskProvider = ({ children }) => {
         },
       });
       const { data } = response;
-      setTasks(data.tasks);
+      if (data && Array.isArray(data.tasks)) {
+        setTasks(data.tasks);
+        setError(null); // Clear any previous errors
+      } else {
+        setError("Data structure from the server is incorrect during refresh");
+      }
     } catch (error) {
-      console.error("Error happened fetching data", error);
+      setError("Error happened fetching data during refresh");
     }
   };
 
   return (
     <TaskContext.Provider
-      value={{ tasks, addTask, deleteTask, updateTask, completeTask }}
+      value={{ tasks, addTask, deleteTask, updateTask, completeTask, error }}
     >
       {children}
     </TaskContext.Provider>
