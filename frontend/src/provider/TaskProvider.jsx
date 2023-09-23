@@ -14,16 +14,17 @@ const TaskProvider = ({ children }) => {
           },
         });
 
-        if (response && response.data && response.data.tasks) {
+        if (response && response.data && Array.isArray(response.data.tasks)) {
+          // Check if response.data.tasks is an array
           setTasks(response.data.tasks);
         } else {
           console.error("Data structure from the server is incorrect");
+          // Handle the incorrect data structure here, e.g., display an error message or log it.
         }
       } catch (error) {
         console.error("Error happened fetching data", error);
       }
     };
-
     fetchAllTasks();
   }, []);
 
