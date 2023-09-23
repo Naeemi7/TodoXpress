@@ -47,8 +47,8 @@ const DisplayTask = () => {
   };
 
   // Separate pending and completed tasks
-  const pendingTasks = tasks.filter((item) => !item.completed);
-  const completedTasks = tasks.filter((item) => item.completed);
+  const pendingTasks = tasks ? tasks.filter((item) => !item.completed) : [];
+  const completedTasks = tasks ? tasks.filter((item) => item.completed) : [];
 
   return (
     <>
