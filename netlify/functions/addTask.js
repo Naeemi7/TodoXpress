@@ -8,16 +8,19 @@ exports.handler = async (event, context) => {
   try {
     await connectToDatabase();
     console.log("Received event body: ", event.body);
-    const body = JSON.parse(event.body);
+    const { title, description } = JSON.parse(event.body);
 
-    if (!body.title) {
+    if (!body.body) {
       return {
         statusCode: 400,
         body: JSON.stringify({ message: "Title is required" }),
       };
     }
 
-    const newTask = await Todo.create(body);
+    const newTask = await Todo.create({
+      title,
+      description,
+    });
 
     return {
       statusCode: 201,

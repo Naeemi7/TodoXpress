@@ -4,8 +4,6 @@ const dotenv = require("dotenv");
 
 dotenv.config();
 exports.handler = async (event, context) => {
-  context.callbackWaitsForEmptyEventLoop = false;
-
   try {
     await connectToDatabase();
     console.log("Received event body: ", event.body);
