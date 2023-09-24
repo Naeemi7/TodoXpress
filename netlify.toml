@@ -7,7 +7,7 @@
 
 [[redirects]]
   from = "/api/tasks/*"
-  to = "/.netlify/functions/:splat"
+  to = "/.netlify/functions/getAllTasks/:splat"
   status = 200
 
 [[redirects]]
