@@ -4,23 +4,23 @@ import mongoose from "mongoose";
 import cors from "cors";
 import todoRoutes from "./routes/todoRoutes.js";
 
-//Load .eng file connects into process.env variable
+// Load .env file and connect it to process.env variable
 dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 3000;
 
-// Parse the Json body to req.body
+// Parse the JSON body to req.body
 app.use(express.json());
 
-const corsOption = {
-  origin: "*", // You might want to restrict this to specific origins in a production environment.
+const corsOptions = {
+  origin: ["https://todoxpress.netlify.app"], // Use your production URL
   methods: ["HEAD", "GET", "POST", "PATCH", "DELETE", "PUT"],
 };
 
-app.use(cors(corsOption));
+app.use(cors(corsOptions));
 
-// Conneting to mongoDB
+// Connecting to MongoDB
 mongoose
   .connect(
     `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/${process.env.DB_NAME}`,
@@ -34,10 +34,10 @@ mongoose
     console.log("🤨");
   });
 
-//Register Routes
+// Register Routes
 app.use("/api/tasks", todoRoutes);
 
-//The server is listen
+// The server is listening
 app.listen(port, () => {
   console.log("The server is listening on port", port);
 });
