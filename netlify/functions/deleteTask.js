@@ -17,7 +17,6 @@ export const handler = async (event, context) => {
     const { id } = JSON.parse(event.body);
     const taskId = ObjectId(id);
 
-    // Use the same logic as your backend controller to delete the task
     const deletedTask = await Todo.findByIdAndDelete(taskId);
 
     if (!deletedTask) {

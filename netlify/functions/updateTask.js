@@ -21,7 +21,6 @@ exports.handler = async (event, context) => {
       };
     }
 
-    // Use the same logic as your backend controller to update the task
     const updatedTask = await Todo.findByIdAndUpdate(
       taskId,
       {
