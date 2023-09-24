@@ -13,11 +13,9 @@ const port = process.env.PORT || 3000;
 // Parse the Json body to req.body
 app.use(express.json());
 
-// Allow requests from your Netlify-hosted frontend
-const corsOptions = {
-  origin: "https://todoxpress.netlify.app", // Replace with your Netlify frontend URL
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-  credentials: true, // If you need to send cookies
+const corsOption = {
+  origin: "*", // You might want to restrict this to specific origins in a production environment.
+  methods: ["HEAD", "GET", "POST", "PATCH", "DELETE", "PUT"],
 };
 
 app.use(cors(corsOption));
