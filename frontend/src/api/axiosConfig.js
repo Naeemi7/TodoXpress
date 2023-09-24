@@ -2,7 +2,7 @@ import axios from "axios";
 
 // Creating a new Axios instance with a default base URL
 const api = axios.create({
-  baseURL: "http://localhost:3000/api",
+  baseURL: "https://todoxpress.netlify.app/api",
 });
 
 export default api;

@@ -6,26 +6,26 @@
   directory = "netlify/functions"
 
 [[redirects]]
-from = "/http://localhost:3000/api/tasks/*"
-  to = "/.netlify/functions/getAllTasks/:splat"
+  from = "/api/tasks/addTask/*"
+  to = "/.netlify/functions/addTask"
   status = 200
 
 [[redirects]]
-  from = "/http://localhost:3000/api/tasks/create/*"
-  to = "/.netlify/functions/addTask/:splat"
+  from = "/api/tasks/completeTask/*"
+  to = "/.netlify/functions/completeTask"
   status = 200
 
 [[redirects]]
-  from = "/http://localhost:3000/api/tasks/update/:id/*"
-  to = "/.netlify/functions/updatedTask/:id/:splat"
+  from = "/api/tasks/deleteTask/*"
+  to = "/.netlify/functions/deleteTask"
   status = 200
 
 [[redirects]]
-  from = "/http://localhost:3000/api/tasks/delete/:id/*"
-  to = "/.netlify/functions/deleteTask/:id/:splat"
+  from = "/api/tasks/getAllTask/*"
+  to = "/.netlify/functions/getAllTask"
   status = 200
 
 [[redirects]]
-  from = "/http://localhost:3000/api/tasks/complete/:id/*"
-  to = "/.netlify/functions/completeTask/:id/:splat"
+  from = "/api/tasks/updateTask/*"
+  to = "/.netlify/functions/updateTask"
   status = 200
