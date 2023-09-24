@@ -1,6 +1,7 @@
 import { connectToDatabase } from "./dbConnection.js";
 import { model } from "mongoose";
 import { ObjectId } from "mongoose";
+import { StatusCodes } from "http-status-codes";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -21,14 +22,14 @@ export const handler = async (event, context) => {
 
     if (!deletedTask) {
       return {
-        statusCode: 404,
+        statusCode: StatusCodes.NOT_FOUND,
         body: JSON.stringify({ message: "Task not found" }),
       };
     }
 
     console.log(deletedTask);
     return {
-      statusCode: 200,
+      statusCode: StatusCodes.OK,
       headers: {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
@@ -44,7 +45,7 @@ export const handler = async (event, context) => {
     console.error("Error deleting task:", error);
 
     return {
-      statusCode: 500,
+      statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
       headers: {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",

@@ -53,7 +53,8 @@ const TaskProvider = ({ children }) => {
   // For Delete Task
   const deleteTask = async (taskId) => {
     try {
-      await api.delete(`/deleteTask/${taskId}`, {
+      await api.delete("/deleteTask", {
+        data: { id: taskId }, // Send the task ID in the request body
         headers: {
           "Content-Type": "application/json",
         },
