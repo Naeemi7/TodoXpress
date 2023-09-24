@@ -9,11 +9,7 @@ const TaskProvider = ({ children }) => {
   useEffect(() => {
     const fetchAllTasks = async () => {
       try {
-        const response = await api.get("/tasks", {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
+        const response = await api.get("/tasks");
 
         if (response && response.data && Array.isArray(response.data.tasks)) {
           // Check if response.data.tasks is an array
@@ -69,11 +65,7 @@ const TaskProvider = ({ children }) => {
   // For Update Task
   const updateTask = async (taskId, updatedTask) => {
     try {
-      await api.put(`/tasks/update/${taskId}`, updatedTask, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      await api.put(`/tasks/update/${taskId}`, updatedTask);
 
       // Refresh tasks
       refreshTasks();
@@ -85,11 +77,7 @@ const TaskProvider = ({ children }) => {
   // For Mark Task as Done
   const completeTask = async (taskId) => {
     try {
-      await api.patch(`/tasks/complete/${taskId}`, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      await api.patch(`/tasks/complete/${taskId}`);
 
       // Refresh Task
       refreshTasks();
@@ -100,11 +88,7 @@ const TaskProvider = ({ children }) => {
 
   const refreshTasks = async () => {
     try {
-      const response = await api.get("/tasks", {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await api.get("/tasks");
       const { data } = response;
       if (data && Array.isArray(data.tasks)) {
         setTasks(data.tasks);
