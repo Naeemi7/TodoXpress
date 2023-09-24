@@ -48,6 +48,21 @@ const DisplayTask = () => {
     }
   };
 
+  // Function to toggle the "done" status of a task
+  const toggleDoneStatus = async (taskId, currentCompleted) => {
+    try {
+      // Invert the completed status
+      const updatedTask = {
+        completed: !currentCompleted,
+      };
+
+      await updateTask(taskId, updatedTask);
+    } catch (error) {
+      console.error("Error happened while updating the task", error);
+      // You can display an error message to the user here if needed
+    }
+  };
+
   // Separate pending and completed tasks
   const pendingTasks = tasks ? tasks.filter((item) => !item.completed) : [];
   const completedTasks = tasks ? tasks.filter((item) => item.completed) : [];
@@ -94,7 +109,10 @@ const DisplayTask = () => {
                 <p>{formatDate(item.createdAt)}</p>
               </div>
               <div className="button-container">
-                <FaCheckCircle className="icons done" />
+                <FaCheckCircle
+                  className={`icons done${item.completed ? " completed" : ""}`}
+                  onClick={() => toggleDoneStatus(item._id, item.completed)}
+                />
                 <FaTimesCircle
                   className="icons delete"
                   onClick={() => deleteTask(item._id)}
