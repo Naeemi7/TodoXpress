@@ -58,7 +58,7 @@ const TaskProvider = ({ children }) => {
           "Content-Type": "application/json",
         },
       });
-
+      console.log(taskId);
       // Refresh tasks
       refreshTasks();
     } catch (error) {

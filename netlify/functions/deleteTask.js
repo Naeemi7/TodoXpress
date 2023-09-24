@@ -1,18 +1,20 @@
-const { default: mongoose } = require("mongoose");
-const connectToDatabase = require("./dbConnection.js");
-const Todo = require("./Todo.js");
-const dotenv = require("dotenv");
+import { connectToDatabase } from "./dbConnection.js";
+import { model } from "mongoose";
+import { ObjectId } from "mongoose";
+import dotenv from "dotenv";
 
 dotenv.config();
 
-exports.handler = async (event, context) => {
+const Todo = model("Todo");
+
+export const handler = async (event, context) => {
   context.callbackWaitsForEmptyEventLoop = false;
 
   try {
     await connectToDatabase();
     console.log("Received event body: ", event.body);
     const { id } = JSON.parse(event.body);
-    const taskId = mongoose.Types.ObjectId(id);
+    const taskId = ObjectId(id);
 
     // Use the same logic as your backend controller to delete the task
     const deletedTask = await Todo.findByIdAndDelete(taskId);
