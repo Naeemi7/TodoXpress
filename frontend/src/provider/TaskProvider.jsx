@@ -9,7 +9,7 @@ const TaskProvider = ({ children }) => {
   useEffect(() => {
     const fetchAllTasks = async () => {
       try {
-        const response = await api.get("/getAllTask", {
+        const response = await api.get("/tasks", {
           headers: {
             "Content-Type": "application/json",
           },
@@ -37,7 +37,7 @@ const TaskProvider = ({ children }) => {
         description: taskDescription,
       };
 
-      await api.post("/addTask/", newTask, {
+      await api.post("/tasks/create/", newTask, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -53,8 +53,7 @@ const TaskProvider = ({ children }) => {
   // For Delete Task
   const deleteTask = async (taskId) => {
     try {
-      await api.delete("/deleteTask", {
-        data: { id: taskId }, // Send the task ID in the request body
+      await api.delete(`/tasks/delete/${taskId}`, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -70,7 +69,7 @@ const TaskProvider = ({ children }) => {
   // For Update Task
   const updateTask = async (taskId, updatedTask) => {
     try {
-      await api.put(`/updateTask/${taskId}`, updatedTask, {
+      await api.put(`/tasks/update/${taskId}`, updatedTask, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -86,7 +85,7 @@ const TaskProvider = ({ children }) => {
   // For Mark Task as Done
   const completeTask = async (taskId) => {
     try {
-      await api.patch(`/completeTask/${taskId}`, null, {
+      await api.patch(`/tasks/complete/${taskId}`, null, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -101,7 +100,7 @@ const TaskProvider = ({ children }) => {
 
   const refreshTasks = async () => {
     try {
-      const response = await api.get("/getAllTask", {
+      const response = await api.get("/tasks", {
         headers: {
           "Content-Type": "application/json",
         },
