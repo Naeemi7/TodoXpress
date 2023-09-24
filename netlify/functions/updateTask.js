@@ -40,12 +40,7 @@ exports.handler = async (event, context) => {
     console.log(updatedTask);
     return {
       statusCode: 200,
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-        "Access-Control-Allow-Headers":
-          "Origin, X-Requested-With, Content-Type, Accept",
-      },
+
       body: JSON.stringify({
         message: "Task is updated",
         updatedTask,
@@ -56,12 +51,7 @@ exports.handler = async (event, context) => {
 
     return {
       statusCode: 500,
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-        "Access-Control-Allow-Headers":
-          "Origin, X-Requested-With, Content-Type, Accept",
-      },
+
       body: JSON.stringify({ error: "Internal Server Error" }),
     };
   }
