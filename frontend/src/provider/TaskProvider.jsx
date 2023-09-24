@@ -85,7 +85,7 @@ const TaskProvider = ({ children }) => {
   // For Mark Task as Done
   const completeTask = async (taskId) => {
     try {
-      await api.patch(`/tasks/complete/${taskId}`, null, {
+      await api.patch(`/tasks/complete/${taskId}`, {
         headers: {
           "Content-Type": "application/json",
         },
