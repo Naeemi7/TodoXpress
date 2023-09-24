@@ -1,4 +1,4 @@
-const connectToDatabase = require("./dbConnection.js");
+/* const connectToDatabase = require("./dbConnection.js");
 const Todo = require("./Todo.js");
 const dotenv = require("dotenv");
 
@@ -32,3 +32,4 @@ exports.handler = async (event, context) => {
     };
   }
 };
+ */
