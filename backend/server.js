@@ -18,7 +18,7 @@ const corsOption = {
   methods: ["HEAD", "GET", "POST", "PATCH", "DELETE", "PUT"],
 };
 
-app.use(cors(corsOptions));
+app.use(cors(corsOption));
 
 // Connecting to MongoDB
 mongoose
