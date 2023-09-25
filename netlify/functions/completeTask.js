@@ -1,4 +1,4 @@
-const { default: mongoose } = require("mongoose");
+const mongoose = require("mongoose");
 const connectToDatabase = require("./dbConnection.js");
 const Todo = require("./Todo.js");
 const dotenv = require("dotenv");
@@ -10,12 +10,11 @@ exports.handler = async (event, context) => {
 
   try {
     await connectToDatabase();
-    console.log("Received event body: ", event.body);
-    const { id } = JSON.parse(event.body);
-    const taskId = mongoose.Types.ObjectId(id);
 
+    const id = event.queryStringParameters.id;
+    console.log("Received event params: ", id);
     const completedTask = await Todo.findByIdAndUpdate(
-      taskId,
+      id,
       {
         completed: true,
       },
@@ -29,7 +28,6 @@ exports.handler = async (event, context) => {
       };
     }
 
-    console.log(completedTask);
     return {
       statusCode: 200,
 
@@ -44,7 +42,7 @@ exports.handler = async (event, context) => {
     return {
       statusCode: 500,
 
-      body: JSON.stringify({ error: "Internal Server Error" }),
+      body: JSON.stringify(error),
     };
   }
 };

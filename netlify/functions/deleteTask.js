@@ -1,23 +1,19 @@
-import { connectToDatabase } from "./dbConnection.js";
-import { model } from "mongoose";
-import { ObjectId } from "mongoose";
-
-import dotenv from "dotenv";
+const mongoose = require("mongoose");
+const connectToDatabase = require("./dbConnection.js");
+const Todo = require("./Todo.js");
+const dotenv = require("dotenv");
 
 dotenv.config();
 
-const Todo = model("Todo");
-
-export const handler = async (event, context) => {
+exports.handler = async (event, context) => {
   context.callbackWaitsForEmptyEventLoop = false;
 
   try {
     await connectToDatabase();
     console.log("Received event body: ", event.body);
-    const { id } = JSON.parse(event.body);
-    const taskId = ObjectId(id);
+    const id = event.queryStringParameters.id;
 
-    const deletedTask = await Todo.findByIdAndDelete(taskId);
+    const deletedTask = await Todo.findByIdAndDelete(id);
 
     if (!deletedTask) {
       return {
@@ -29,7 +25,6 @@ export const handler = async (event, context) => {
     console.log(deletedTask);
     return {
       statusCode: 200,
-
       body: JSON.stringify({
         message: "Task is deleted",
         deletedTask,
@@ -40,7 +35,6 @@ export const handler = async (event, context) => {
 
     return {
       statusCode: 500,
-
       body: JSON.stringify({ error: "Internal Server Error" }),
     };
   }
