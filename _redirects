@@ -1,5 +1,0 @@
-/http://localhost:3000/api/tasks/* /.netlify/functions/getAllTasks/:splat 200
-/http://localhost:3000/api/tasks/create/* /.netlify/functions/addTask/:splat 200
-/http://localhost:3000/api/tasks/update/:id/* /.netlify/functions/updatedTask/:id/:splat 200
-/http://localhost:3000/api/tasks/delete/:id/* /.netlify/functions/deleteTask/:id/:splat 200
-/http://localhost:3000/api/tasks/complete/:id/* /.netlify/functions/completeTask/:id/:splat 200
