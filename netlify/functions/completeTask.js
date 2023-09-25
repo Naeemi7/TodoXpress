@@ -11,11 +11,9 @@ exports.handler = async (event, context) => {
   try {
     await connectToDatabase();
     console.log("Received event body: ", event.body);
-    const { id } = JSON.parse(event.body);
-    const taskId = mongoose.Types.ObjectId(id);
-
+    const id = event.pathParameters.id;
     const completedTask = await Todo.findByIdAndUpdate(
-      taskId,
+      id,
       {
         completed: true,
       },
