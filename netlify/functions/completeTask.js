@@ -12,6 +12,7 @@ exports.handler = async (event, context) => {
     await connectToDatabase();
     console.log("Received event body: ", event.body);
     const id = event.pathParameters.id;
+    console.log(id);
     const completedTask = await Todo.findByIdAndUpdate(
       id,
       {
