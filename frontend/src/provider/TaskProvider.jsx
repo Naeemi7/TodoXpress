@@ -1,10 +1,25 @@
-import { useState, useEffect } from "react";
+import { useEffect, useReducer } from "react";
 import api from "../api/axiosConfig";
 import TaskContext from "../context/TaskContext";
 
+const initialState = {
+  tasks: [],
+  error: null,
+};
+
+const taskReducer = (state, action) => {
+  switch (action.type) {
+    case "SET_TASKS":
+      return { ...state, tasks: action.payload, error: null };
+    case "SET_ERROR":
+      return { ...state, error: action.payload };
+    default:
+      return state;
+  }
+};
+
 const TaskProvider = ({ children }) => {
-  const [tasks, setTasks] = useState([]);
-  const [error, setError] = useState(null);
+  const [state, dispatch] = useReducer(taskReducer, initialState);
 
   useEffect(() => {
     const fetchAllTasks = async () => {
@@ -12,14 +27,18 @@ const TaskProvider = ({ children }) => {
         const response = await api.get("/getAllTask");
 
         if (response.data && Array.isArray(response.data.tasks)) {
-          // Check if response.data.tasks is an array
-          setTasks(response.data.tasks);
-          setError(null); // Clear any previous errors
+          dispatch({ type: "SET_TASKS", payload: response.data.tasks });
         } else {
-          setError("Data structure from the server is incorrect");
+          dispatch({
+            type: "SET_ERROR",
+            payload: "Data structure from the server is incorrect",
+          });
         }
       } catch (error) {
-        setError("Error happened fetching data: " + error.message);
+        dispatch({
+          type: "SET_ERROR",
+          payload: "Error happened fetching data: " + error.message,
+        });
       }
     };
 
@@ -39,64 +58,61 @@ const TaskProvider = ({ children }) => {
         },
       });
 
-      // Refresh tasks
-      refreshTasks();
+      // No need to explicitly refresh tasks, as the effect will handle it
     } catch (error) {
-      setError("Error occurred while creating a new task: " + error.message);
+      dispatch({
+        type: "SET_ERROR",
+        payload: "Error occurred while creating a new task: " + error.message,
+      });
     }
   };
 
-  // For Delete Task
   const deleteTask = async (taskId) => {
     try {
       await api.delete(`/deleteTask?id=${taskId}`);
-      // Refresh tasks
-      refreshTasks();
+      // No need to explicitly refresh tasks, as the effect will handle it
     } catch (error) {
-      setError("Error happened deleting the task: " + error.message);
+      dispatch({
+        type: "SET_ERROR",
+        payload: "Error happened deleting the task: " + error.message,
+      });
     }
   };
 
-  // For Update Task
   const updateTask = async (taskId, updatedTask) => {
     try {
       await api.put(`/updateTask?id=${taskId}`, updatedTask);
-      // Refresh tasks
-      refreshTasks();
+      // No need to explicitly refresh tasks, as the effect will handle it
     } catch (error) {
-      setError("Error happened updating the task: " + error.message);
+      dispatch({
+        type: "SET_ERROR",
+        payload: "Error happened updating the task: " + error.message,
+      });
     }
   };
 
-  // For Mark Task as Done
   const completeTask = async (taskId) => {
     try {
       await api.patch(`/completeTask?id=${taskId}`);
-      // Refresh Task
-      refreshTasks();
+      // No need to explicitly refresh tasks, as the effect will handle it
     } catch (error) {
-      setError("Error happened marking the task as done: " + error.message);
-    }
-  };
-
-  const refreshTasks = async () => {
-    try {
-      const response = await api.get("/getAllTask");
-      const { data } = response;
-      if (data && Array.isArray(data.tasks)) {
-        setTasks(data.tasks);
-        setError(null);
-      } else {
-        setError("Data structure from the server is incorrect during refresh");
-      }
-    } catch (error) {
-      setError("Error happened fetching data during refresh: " + error.message);
+      dispatch({
+        type: "SET_ERROR",
+        payload: "Error happened marking the task as done: " + error.message,
+      });
     }
   };
 
   return (
     <TaskContext.Provider
-      value={{ tasks, addTask, deleteTask, updateTask, completeTask, error }}
+      value={{
+        tasks: state.tasks,
+        addTask,
+        deleteTask,
+        updateTask,
+        completeTask,
+        error: state.error,
+      }}
     >
       {children}
     </TaskContext.Provider>
