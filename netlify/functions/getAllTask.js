@@ -3,7 +3,6 @@ const Todo = require("./Todo.js");
 const dotenv = require("dotenv");
 
 dotenv.config();
-
 exports.handler = async (event, context) => {
   context.callbackWaitsForEmptyEventLoop = false;
 
@@ -15,8 +14,8 @@ exports.handler = async (event, context) => {
 
     if (tasks.length === 0) {
       return {
-        statusCode: 200, // Change status code to 200
-        body: JSON.stringify({ message: "No Tasks Found", tasks: [] }), // Return an empty array
+        statusCode: 404,
+        body: JSON.stringify({ message: "No Tasks Found" }),
       };
     }
 
