@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect, useMemo } from "react";
 import useTaskContext from "../context/useTaskContext";
 import { FaCheckCircle, FaTimesCircle, FaPen } from "react-icons/fa";
 import { Modal, Button, Form } from "react-bootstrap";
 
 const DisplayTask = () => {
-  const { tasks, deleteTask, updateTask, completeTask } = useTaskContext();
+  const { tasks, deleteTask, updateTask, completeTask, refreshTasks } =
+    useTaskContext();
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [selectedTask, setSelectedTask] = useState(null);
   const [updatedTitle, setUpdatedTitle] = useState("");
@@ -44,7 +45,6 @@ const DisplayTask = () => {
       }
     } catch (error) {
       console.error("Error happened while updating the task", error);
-      // You can display an error message to the user here if needed
     }
   };
 
@@ -57,12 +57,25 @@ const DisplayTask = () => {
       await completeTask(taskId, updatedTask);
     } catch (error) {
       console.error("Error happened while updating the task", error);
-      // You can display an error message to the user here if needed
     }
   };
 
-  const pendingTasks = tasks ? tasks.filter((item) => !item.completed) : [];
-  const completedTasks = tasks ? tasks.filter((item) => item.completed) : [];
+  // Use useMemo to memoize pendingTasks and completedTasks
+  const pendingTasks = useMemo(
+    () => (tasks ? tasks.filter((item) => !item.completed) : []),
+    [tasks]
+  );
+  const completedTasks = useMemo(
+    () => (tasks ? tasks.filter((item) => item.completed) : []),
+    [tasks]
+  );
+
+  //Check if PendingTasks and Complete Tasks are empty and trigger a refresh if needed
+  useEffect(() => {
+    if (pendingTasks.length === 0 || completedTasks.length === 0) {
+      refreshTasks();
+    }
+  }, [pendingTasks, completedTasks, refreshTasks]);
 
   return (
     <>
