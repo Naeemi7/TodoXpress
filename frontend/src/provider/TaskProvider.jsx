@@ -72,7 +72,7 @@ const TaskProvider = ({ children }) => {
   // For Mark Task as Done
   const completeTask = async (taskId) => {
     try {
-      await api.patch(`/completeTask/${taskId}`);
+      await api.patch(`/completeTask?id=${taskId}`);
 
       // Refresh Task
       refreshTasks();
