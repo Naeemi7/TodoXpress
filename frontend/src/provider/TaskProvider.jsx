@@ -24,7 +24,7 @@ const TaskProvider = ({ children }) => {
     };
 
     fetchAllTasks();
-  }, []);
+  }, []); // Only runs once when the component mounts
 
   const addTask = async (taskName, taskDescription) => {
     try {
