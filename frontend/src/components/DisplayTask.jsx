@@ -1,7 +1,6 @@
 import { useState } from "react";
 import useTaskContext from "../context/useTaskContext";
-import { FaCheckCircle, FaTimesCircle } from "react-icons/fa";
-import { FaPenToSquare } from "react-icons/fa6";
+import { FaCheckCircle, FaTimesCircle, FaPen } from "react-icons/fa";
 import { Modal, Button, Form } from "react-bootstrap";
 
 const DisplayTask = () => {
@@ -33,24 +32,24 @@ const DisplayTask = () => {
 
   const handleUpdate = async () => {
     try {
-      const updatedTask = {
-        title: updatedTitle,
-        description: updatedDescription,
-      };
+      if (selectedTask) {
+        const updatedTask = {
+          title: updatedTitle,
+          description: updatedDescription,
+        };
 
-      await updateTask(selectedTask._id, updatedTask);
+        await updateTask(selectedTask._id, updatedTask);
 
-      setShowUpdateModal(false);
+        setShowUpdateModal(false);
+      }
     } catch (error) {
       console.error("Error happened while updating the task", error);
       // You can display an error message to the user here if needed
     }
   };
 
-  // Function to toggle the "done" status of a task
   const toggleDoneStatus = async (taskId, currentCompleted) => {
     try {
-      // Invert the completed status
       const updatedTask = {
         completed: !currentCompleted,
       };
@@ -62,7 +61,6 @@ const DisplayTask = () => {
     }
   };
 
-  // Separate pending and completed tasks
   const pendingTasks = tasks ? tasks.filter((item) => !item.completed) : [];
   const completedTasks = tasks ? tasks.filter((item) => item.completed) : [];
 
@@ -87,7 +85,7 @@ const DisplayTask = () => {
                   className="icons delete"
                   onClick={() => deleteTask(item._id)}
                 />
-                <FaPenToSquare
+                <FaPen
                   className="icons update"
                   onClick={() => toggleUpdateModal(item)}
                 />
@@ -115,7 +113,7 @@ const DisplayTask = () => {
                   className="icons delete"
                   onClick={() => deleteTask(item._id)}
                 />
-                <FaPenToSquare
+                <FaPen
                   className="icons update"
                   onClick={() => toggleUpdateModal(item)}
                 />
@@ -153,7 +151,7 @@ const DisplayTask = () => {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={toggleUpdateModal}>
+          <Button variant="secondary" onClick={() => setShowUpdateModal(false)}>
             Cancel
           </Button>
           <Button variant="primary" onClick={handleUpdate}>
