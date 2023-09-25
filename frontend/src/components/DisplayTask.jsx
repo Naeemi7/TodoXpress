@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import useTaskContext from "../context/useTaskContext";
 import { FaCheckCircle, FaTimesCircle } from "react-icons/fa";
 import { FaPenToSquare } from "react-icons/fa6";
@@ -56,7 +56,7 @@ const DisplayTask = () => {
         completed: !currentCompleted,
       };
 
-      await updateTask(taskId, updatedTask);
+      await completeTask(taskId, updatedTask);
     } catch (error) {
       console.error("Error happened while updating the task", error);
       // You can display an error message to the user here if needed
@@ -83,7 +83,7 @@ const DisplayTask = () => {
               <div className="button-container">
                 <FaCheckCircle
                   className="icons done"
-                  onClick={() => completeTask(item._id)}
+                  onClick={() => toggleDoneStatus(item._id, item.completed)}
                 />
                 <FaTimesCircle
                   className="icons delete"
