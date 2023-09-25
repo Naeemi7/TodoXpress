@@ -66,7 +66,7 @@ const DisplayTask = () => {
 
   return (
     <>
-      {pendingTasks.length > 0 && (
+      {pendingTasks.length === 0 ? null : (
         <div className="task-section">
           <h3>Pending Tasks</h3>
           {pendingTasks.map((item) => (
@@ -94,7 +94,7 @@ const DisplayTask = () => {
           ))}
         </div>
       )}
-      {completedTasks.length > 0 && (
+      {completedTasks.length === 0 ? null : (
         <div className="task-section">
           <h3>Completed Tasks</h3>
           {completedTasks.map((item) => (
