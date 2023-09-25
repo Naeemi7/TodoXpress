@@ -1,0 +1,24 @@
+[[redirects]]
+from = "/http://localhost:3000/api/tasks/*"
+  to = "/.netlify/functions/getAllTasks/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/http://localhost:3000/api/tasks/create/*"
+  to = "/.netlify/functions/addTask/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/http://localhost:3000/api/tasks/update/:id/*"
+  to = "/.netlify/functions/updatedTask/:id/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/http://localhost:3000/api/tasks/delete/:id/*"
+  to = "/.netlify/functions/deleteTask/:id/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/http://localhost:3000/api/tasks/complete/:id/*"
+  to = "/.netlify/functions/completeTask/:id/:splat"
+  status = 200
