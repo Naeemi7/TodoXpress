@@ -9,7 +9,7 @@ const TaskProvider = ({ children }) => {
   useEffect(() => {
     const fetchAllTasks = async () => {
       try {
-        const response = await api.get("/tasks");
+        const response = await api.get("/getAllTask");
 
         if (response && response.data && Array.isArray(response.data.tasks)) {
           // Check if response.data.tasks is an array
@@ -33,7 +33,7 @@ const TaskProvider = ({ children }) => {
         description: taskDescription,
       };
 
-      await api.post("/tasks/create/", newTask, {
+      await api.post("/addTask/", newTask, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -49,7 +49,7 @@ const TaskProvider = ({ children }) => {
   // For Delete Task
   const deleteTask = async (taskId) => {
     try {
-      await api.delete(`/tasks/delete/${taskId}`);
+      await api.delete(`/deleteTask/${taskId}`);
       console.log(taskId);
       // Refresh tasks
       refreshTasks();
@@ -61,7 +61,7 @@ const TaskProvider = ({ children }) => {
   // For Update Task
   const updateTask = async (taskId, updatedTask) => {
     try {
-      await api.put(`/tasks/update/${taskId}`, updatedTask);
+      await api.put(`/updateTask?id=${taskId}`, updatedTask);
 
       // Refresh tasks
       refreshTasks();
@@ -73,7 +73,7 @@ const TaskProvider = ({ children }) => {
   // For Mark Task as Done
   const completeTask = async (taskId) => {
     try {
-      await api.patch(`/tasks/complete/${taskId}`);
+      await api.patch(`/completeTask/${taskId}`);
 
       // Refresh Task
       refreshTasks();
@@ -84,7 +84,7 @@ const TaskProvider = ({ children }) => {
 
   const refreshTasks = async () => {
     try {
-      const response = await api.get("/tasks");
+      const response = await api.get("/getAllTask");
       const { data } = response;
       if (data && Array.isArray(data.tasks)) {
         setTasks(data.tasks);
