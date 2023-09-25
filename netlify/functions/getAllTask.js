@@ -12,13 +12,13 @@ exports.handler = async (event, context) => {
     const tasks = await Todo.find();
     console.log("Fetched Tasks", tasks);
 
-    if (tasks.length === 0) {
+    /*  if (tasks.length === 0) {
       return {
         statusCode: 404,
         body: JSON.stringify({ message: "No Tasks Found" }),
       };
     }
-
+ */
     return {
       statusCode: 200,
       body: JSON.stringify({ message: "Tasks Found", tasks }),
