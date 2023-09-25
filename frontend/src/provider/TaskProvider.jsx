@@ -62,7 +62,6 @@ const TaskProvider = ({ children }) => {
   const updateTask = async (taskId, updatedTask) => {
     try {
       await api.put(`/updateTask?id=${taskId}`, updatedTask);
-
       // Refresh tasks
       refreshTasks();
     } catch (error) {
