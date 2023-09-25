@@ -14,10 +14,8 @@ export const handler = async (event, context) => {
   try {
     await connectToDatabase();
     console.log("Received event body: ", event.body);
-    const { id } = JSON.parse(event.body);
-    const taskId = ObjectId(id);
-
-    const deletedTask = await Todo.findByIdAndDelete(taskId);
+    const id = event.queryStringParameters.id;
+    const deletedTask = await Todo.findByIdAndDelete(id);
 
     if (!deletedTask) {
       return {

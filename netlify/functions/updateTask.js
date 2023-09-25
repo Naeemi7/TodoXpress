@@ -11,9 +11,8 @@ exports.handler = async (event, context) => {
   try {
     await connectToDatabase();
     console.log("Received event body: ", event.body);
-    const { id, title, description } = JSON.parse(event.body);
-    const taskId = mongoose.Types.ObjectId(id);
-
+    const { title, description } = JSON.parse(event.body);
+    const id = event.queryStringParameters.id;
     if (!title) {
       return {
         statusCode: 400,
@@ -22,7 +21,7 @@ exports.handler = async (event, context) => {
     }
 
     const updatedTask = await Todo.findByIdAndUpdate(
-      taskId,
+      id,
       {
         title,
         description,

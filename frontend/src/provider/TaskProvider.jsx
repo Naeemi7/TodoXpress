@@ -49,7 +49,7 @@ const TaskProvider = ({ children }) => {
   // For Delete Task
   const deleteTask = async (taskId) => {
     try {
-      await api.delete(`/deleteTask/${taskId}`);
+      await api.delete(`/deleteTask?id=${taskId}`);
       console.log(taskId);
       // Refresh tasks
       refreshTasks();
