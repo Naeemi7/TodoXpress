@@ -11,7 +11,7 @@ const TaskProvider = ({ children }) => {
       try {
         const response = await api.get("/getAllTask");
 
-        if (response && response.data && Array.isArray(response.data.tasks)) {
+        if (response.data && Array.isArray(response.data.tasks)) {
           // Check if response.data.tasks is an array
           setTasks(response.data.tasks);
           setError(null); // Clear any previous errors
@@ -50,7 +50,6 @@ const TaskProvider = ({ children }) => {
   const deleteTask = async (taskId) => {
     try {
       await api.delete(`/deleteTask?id=${taskId}`);
-      console.log(taskId);
       // Refresh tasks
       refreshTasks();
     } catch (error) {
@@ -73,7 +72,6 @@ const TaskProvider = ({ children }) => {
   const completeTask = async (taskId) => {
     try {
       await api.patch(`/completeTask?id=${taskId}`);
-
       // Refresh Task
       refreshTasks();
     } catch (error) {
@@ -87,7 +85,7 @@ const TaskProvider = ({ children }) => {
       const { data } = response;
       if (data && Array.isArray(data.tasks)) {
         setTasks(data.tasks);
-        setError(null); // Clear any previous errors
+        setError(null);
       } else {
         setError("Data structure from the server is incorrect during refresh");
       }

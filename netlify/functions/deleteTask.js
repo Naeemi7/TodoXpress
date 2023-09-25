@@ -1,8 +1,7 @@
-import { connectToDatabase } from "./dbConnection.js";
-import { model } from "mongoose";
-import { ObjectId } from "mongoose";
-
-import dotenv from "dotenv";
+const mongoose = require("mongoose");
+const connectToDatabase = require("./dbConnection.js");
+const Todo = require("./Todo.js");
+const dotenv = require("dotenv");
 
 dotenv.config();
 
