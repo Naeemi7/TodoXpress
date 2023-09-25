@@ -7,13 +7,21 @@ dotenv.config();
 
 const Todo = model("Todo");
 
-export const handler = async (event, context) => {
+exports.handler = async (event, context) => {
   context.callbackWaitsForEmptyEventLoop = false;
 
   try {
     await connectToDatabase();
     console.log("Received event body: ", event.body);
     const id = event.queryStringParameters.id;
+
+    if (!ObjectId.isValid(id)) {
+      return {
+        statusCode: 400,
+        body: JSON.stringify({ message: "Invalid ID format" }),
+      };
+    }
+
     const deletedTask = await Todo.findByIdAndDelete(id);
 
     if (!deletedTask) {
@@ -26,7 +34,6 @@ export const handler = async (event, context) => {
     console.log(deletedTask);
     return {
       statusCode: 200,
-
       body: JSON.stringify({
         message: "Task is deleted",
         deletedTask,
@@ -37,7 +44,6 @@ export const handler = async (event, context) => {
 
     return {
       statusCode: 500,
-
       body: JSON.stringify({ error: "Internal Server Error" }),
     };
   }
