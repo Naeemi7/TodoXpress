@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import useTaskContext from "../context/useTaskContext";
 import { FaCheckCircle, FaTimesCircle } from "react-icons/fa";
-import { FaPenSquare } from "react-icons/fa"; // Corrected import name
+import { FaPenToSquare } from "react-icons/fa6";
 import { Modal, Button, Form } from "react-bootstrap";
 
 const DisplayTask = () => {
@@ -87,8 +87,8 @@ const DisplayTask = () => {
                   className="icons delete"
                   onClick={() => deleteTask(item._id)}
                 />
-                <FaPenSquare
-                  className="icons update" // Updated class name
+                <FaPenToSquare
+                  className="icons update"
                   onClick={() => toggleUpdateModal(item)}
                 />
               </div>
@@ -115,8 +115,8 @@ const DisplayTask = () => {
                   className="icons delete"
                   onClick={() => deleteTask(item._id)}
                 />
-                <FaPenSquare
-                  className="icons update" // Updated class name
+                <FaPenToSquare
+                  className="icons update"
                   onClick={() => toggleUpdateModal(item)}
                 />
               </div>
