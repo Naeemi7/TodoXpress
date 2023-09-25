@@ -42,6 +42,9 @@ const DisplayTask = () => {
         await updateTask(selectedTask._id, updatedTask);
 
         setShowUpdateModal(false);
+
+        // Reload the page after updating
+        window.location.reload();
       }
     } catch (error) {
       console.error("Error happened while updating the task", error);
@@ -55,6 +58,9 @@ const DisplayTask = () => {
       };
 
       await completeTask(taskId, updatedTask);
+
+      // Reload the page after completing the task
+      window.location.reload();
     } catch (error) {
       console.error("Error happened while updating the task", error);
     }
