@@ -5,8 +5,6 @@ const dotenv = require("dotenv");
 
 dotenv.config();
 
-const Todo = model("Todo");
-
 exports.handler = async (event, context) => {
   context.callbackWaitsForEmptyEventLoop = false;
 
@@ -14,13 +12,6 @@ exports.handler = async (event, context) => {
     await connectToDatabase();
     console.log("Received event body: ", event.body);
     const id = event.queryStringParameters.id;
-
-    if (!ObjectId.isValid(id)) {
-      return {
-        statusCode: 400,
-        body: JSON.stringify({ message: "Invalid ID format" }),
-      };
-    }
 
     const deletedTask = await Todo.findByIdAndDelete(id);
 
