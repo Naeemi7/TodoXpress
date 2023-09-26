@@ -14,8 +14,8 @@ exports.handler = async (event, context) => {
 
     if (tasks.length === 0) {
       return {
-        statusCode: 404,
-        body: JSON.stringify({ message: "No Tasks Found" }),
+        statusCode: 200,
+        body: JSON.stringify({ message: "No Tasks Found", tasks: [] }),
       };
     }
 
