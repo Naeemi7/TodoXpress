@@ -1,11 +1,11 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState } from "react";
 import useTaskContext from "../context/useTaskContext";
-import { FaCheckCircle, FaTimesCircle, FaPen } from "react-icons/fa";
+import { FaCheckCircle, FaTimesCircle } from "react-icons/fa";
+import { FaPenToSquare } from "react-icons/fa6";
 import { Modal, Button, Form } from "react-bootstrap";
 
 const DisplayTask = () => {
-  const { tasks, deleteTask, updateTask, completeTask, refreshTasks } =
-    useTaskContext();
+  const { tasks, deleteTask, updateTask, completeTask } = useTaskContext();
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [selectedTask, setSelectedTask] = useState(null);
   const [updatedTitle, setUpdatedTitle] = useState("");
@@ -33,59 +33,42 @@ const DisplayTask = () => {
 
   const handleUpdate = async () => {
     try {
-      if (selectedTask) {
-        const updatedTask = {
-          title: updatedTitle,
-          description: updatedDescription,
-        };
+      const updatedTask = {
+        title: updatedTitle,
+        description: updatedDescription,
+      };
 
-        await updateTask(selectedTask._id, updatedTask);
+      await updateTask(selectedTask._id, updatedTask);
 
-        setShowUpdateModal(false);
-
-        // Reload the page after updating
-        window.location.reload();
-      }
+      setShowUpdateModal(false);
     } catch (error) {
       console.error("Error happened while updating the task", error);
+      // You can display an error message to the user here if needed
     }
   };
 
+  // Function to toggle the "done" status of a task
   const toggleDoneStatus = async (taskId, currentCompleted) => {
     try {
+      // Invert the completed status
       const updatedTask = {
         completed: !currentCompleted,
       };
 
       await completeTask(taskId, updatedTask);
-
-      // Reload the page after completing the task
-      window.location.reload();
     } catch (error) {
       console.error("Error happened while updating the task", error);
+      // You can display an error message to the user here if needed
     }
   };
 
-  // Use useMemo to memoize pendingTasks and completedTasks
-  const pendingTasks = useMemo(
-    () => (tasks ? tasks.filter((item) => !item.completed) : []),
-    [tasks]
-  );
-  const completedTasks = useMemo(
-    () => (tasks ? tasks.filter((item) => item.completed) : []),
-    [tasks]
-  );
-
-  //Check if PendingTasks and Complete Tasks are empty and trigger a refresh if needed
-  useEffect(() => {
-    if (pendingTasks.length === 0 || completedTasks.length === 0) {
-      refreshTasks();
-    }
-  }, [pendingTasks, completedTasks, refreshTasks]);
+  // Separate pending and completed tasks
+  const pendingTasks = tasks ? tasks.filter((item) => !item.completed) : [];
+  const completedTasks = tasks ? tasks.filter((item) => item.completed) : [];
 
   return (
     <>
-      {pendingTasks.length === 0 ? null : (
+      {pendingTasks.length > 0 && (
         <div className="task-section">
           <h3>Pending Tasks</h3>
           {pendingTasks.map((item) => (
@@ -104,7 +87,7 @@ const DisplayTask = () => {
                   className="icons delete"
                   onClick={() => deleteTask(item._id)}
                 />
-                <FaPen
+                <FaPenToSquare
                   className="icons update"
                   onClick={() => toggleUpdateModal(item)}
                 />
@@ -113,7 +96,7 @@ const DisplayTask = () => {
           ))}
         </div>
       )}
-      {completedTasks.length === 0 ? null : (
+      {completedTasks.length > 0 && (
         <div className="task-section">
           <h3>Completed Tasks</h3>
           {completedTasks.map((item) => (
@@ -132,7 +115,7 @@ const DisplayTask = () => {
                   className="icons delete"
                   onClick={() => deleteTask(item._id)}
                 />
-                <FaPen
+                <FaPenToSquare
                   className="icons update"
                   onClick={() => toggleUpdateModal(item)}
                 />
@@ -170,7 +153,7 @@ const DisplayTask = () => {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowUpdateModal(false)}>
+          <Button variant="secondary" onClick={toggleUpdateModal}>
             Cancel
           </Button>
           <Button variant="primary" onClick={handleUpdate}>
