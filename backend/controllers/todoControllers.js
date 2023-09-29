@@ -1,12 +1,42 @@
 import { StatusCodes } from "http-status-codes";
-import Todo from "../models/Todo.js";
+import User from "../models/User.js";
 
 /**
+ * Create New Username
+ * @param {*} req
+ * @param {*} res
+ * @returns
+ */
+export const createUsername = async (req, res) => {
+  try {
+    const { username } = req.body;
+
+    const newUser = await User.create({
+      username,
+    });
+
+    if (!username) {
+      return res
+        .status(StatusCodes.BAD_REQUEST)
+        .json({ message: "Please Enter a Username" });
+    }
+
+    return res
+      .status(StatusCodes.CREATED)
+      .json({ message: "New User created", newUser });
+  } catch (error) {
+    return res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ message: "Internal Server Error", error: error.toString() });
+  }
+};
+
+/* /**
  * Create a new Task
  * @param {*} req
  * @param {*} res
  */
-export const createTask = async (req, res) => {
+/* export const createTask = async (req, res) => {
   try {
     const { title, description } = req.body;
 
@@ -23,7 +53,7 @@ export const createTask = async (req, res) => {
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
       .json({ error: error.toString() });
   }
-};
+}; */
 
 /**
  * Get all the tasks
@@ -31,7 +61,7 @@ export const createTask = async (req, res) => {
  * @param {*} res
  * @returns
  */
-export const getAllTasks = async (req, res) => {
+/* export const getAllTasks = async (req, res) => {
   try {
     const tasks = await Todo.find();
 
@@ -47,14 +77,14 @@ export const getAllTasks = async (req, res) => {
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
       .json({ error: error.toString() });
   }
-};
+}; */
 
 /**
  * Delete the Task
  * @param {*} req
  * @param {*} res
  */
-export const deleteTask = async (req, res) => {
+/* export const deleteTask = async (req, res) => {
   try {
     const { id } = req.params; // Use req.params to get the task ID from the URL
 
@@ -75,14 +105,14 @@ export const deleteTask = async (req, res) => {
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
       .json({ error: error.toString() });
   }
-};
+}; */
 
 /**
  * Update the task
  * @param {*} req
  * @param {*} res
  */
-export const updateTask = async (req, res) => {
+/* export const updateTask = async (req, res) => {
   try {
     const { id } = req.params;
     const { title, description } = req.body;
@@ -111,14 +141,14 @@ export const updateTask = async (req, res) => {
       .json({ error: error.toString() });
   }
 };
-
+ */
 /**
  * Find the task by ID and change the completed status to true
  * @param {*} req
  * @param {*} res
  * @returns
  */
-export const completeTask = async (req, res) => {
+/* export const completeTask = async (req, res) => {
   try {
     const { id } = req.params;
     const { completed } = req.body;
@@ -146,3 +176,4 @@ export const completeTask = async (req, res) => {
       .json({ error: error.toString() });
   }
 };
+ */

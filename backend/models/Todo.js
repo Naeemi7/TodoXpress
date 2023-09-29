@@ -1,6 +1,11 @@
-import { Schema, model } from "mongoose";
+import { Schema } from "mongoose";
 
-const todoSchema = new Schema({
+export const todoSchema = new Schema({
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
   title: {
     type: String,
     required: true,
@@ -20,7 +25,3 @@ const todoSchema = new Schema({
     default: Date.now,
   },
 });
-
-const Todo = model("Todo", todoSchema);
-
-export default Todo;

@@ -1,17 +1,22 @@
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./styles/App.scss";
 import "bootstrap/dist/css/bootstrap.min.css";
-import DisplayTask from "./components/DisplayTask";
-import AddTask from "./components/AddTask";
-import TaskProvider from "./provider/TaskProvider";
+
+import Home from "./pages/Home"; //
+import User from "./pages/User";
 
 function App() {
   return (
     <div className="app">
       <h1>My Todos</h1>
-      <TaskProvider>
-        <AddTask />
-        <DisplayTask />
-      </TaskProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<User />} />{" "}
+          {/* Render User component initially */}
+          <Route path="/home" element={<Home />} />{" "}
+          {/* Render Home component after successful registration */}
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }

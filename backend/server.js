@@ -36,7 +36,7 @@ mongoose
 
 // Register Routes
 app.use("/api/tasks", todoRoutes);
-
+app.use("/api/users", todoRoutes);
 // The server is listening
 app.listen(port, () => {
   console.log("The server is listening on port", port);

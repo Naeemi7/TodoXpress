@@ -4,12 +4,13 @@ import TaskContext from "../context/TaskContext";
 
 const TaskProvider = ({ children }) => {
   const [tasks, setTasks] = useState([]);
+  const [user, setUser] = useState([]);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchAllTasks = async () => {
       try {
-        const response = await api.get("/getAllTask");
+        const response = await api.get("/tasks");
 
         if (response.data && Array.isArray(response.data.tasks)) {
           // Check if response.data.tasks is an array
@@ -26,6 +27,27 @@ const TaskProvider = ({ children }) => {
     fetchAllTasks();
   }, []);
 
+  const createUsername = async (username) => {
+    try {
+      const newUser = {
+        username: username,
+      };
+
+      const response = await api.post("/users/register", newUser);
+      setUser(response.data);
+      setError(null);
+    } catch (error) {
+      setError(
+        "Error occurred while creating a new username: " + error.message
+      );
+    }
+  };
+
+  /**
+   * Function to add Tasks
+   * @param {*} taskName
+   * @param {*} taskDescription
+   */
   const addTask = async (taskName, taskDescription) => {
     try {
       const newTask = {
@@ -33,11 +55,7 @@ const TaskProvider = ({ children }) => {
         description: taskDescription,
       };
 
-      await api.post("/addTask/", newTask, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      await api.post("/create/", newTask, {});
 
       // Refresh tasks
       refreshTasks();
@@ -46,10 +64,13 @@ const TaskProvider = ({ children }) => {
     }
   };
 
-  // For Delete Task
+  /**
+   * Function to delete Tasks
+   * @param {*} taskId
+   */
   const deleteTask = async (taskId) => {
     try {
-      await api.delete(`/deleteTask?id=${taskId}`);
+      await api.delete(`/delete/${taskId}`);
       // Refresh tasks
       refreshTasks();
     } catch (error) {
@@ -57,10 +78,14 @@ const TaskProvider = ({ children }) => {
     }
   };
 
-  // For Update Task
+  /**
+   * Function to update Tasks
+   * @param {*} taskId
+   * @param {*} updatedTask
+   */
   const updateTask = async (taskId, updatedTask) => {
     try {
-      await api.put(`/updateTask?id=${taskId}`, updatedTask);
+      await api.put(`/update/${taskId}`, updatedTask);
       // Refresh tasks
       refreshTasks();
     } catch (error) {
@@ -68,10 +93,13 @@ const TaskProvider = ({ children }) => {
     }
   };
 
-  // For Mark Task as Done
+  /**
+   * Function to mark tasks as done
+   * @param {*} taskId
+   */
   const completeTask = async (taskId) => {
     try {
-      await api.patch(`/completeTask?id=${taskId}`);
+      await api.patch(`/complete/${taskId}`);
       // Refresh Task
       refreshTasks();
     } catch (error) {
@@ -79,9 +107,12 @@ const TaskProvider = ({ children }) => {
     }
   };
 
+  /**
+   * Function to refresh the tasks after each update
+   */
   const refreshTasks = async () => {
     try {
-      const response = await api.get("/getAllTask");
+      const response = await api.get("/tasks");
       const { data } = response;
       if (data && Array.isArray(data.tasks)) {
         setTasks(data.tasks);
@@ -96,7 +127,16 @@ const TaskProvider = ({ children }) => {
 
   return (
     <TaskContext.Provider
-      value={{ tasks, addTask, deleteTask, updateTask, completeTask, error }}
+      value={{
+        tasks,
+        addTask,
+        deleteTask,
+        updateTask,
+        completeTask,
+        createUsername,
+        user,
+        error,
+      }}
     >
       {children}
     </TaskContext.Provider>
