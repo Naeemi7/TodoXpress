@@ -29,17 +29,25 @@ const TaskProvider = ({ children }) => {
 
   const createUsername = async (username) => {
     try {
-      const newUser = {
-        username: username,
-      };
-
-      const response = await api.post("/users/register", newUser);
-      setUser(response.data);
+      // Clear previous error messages
       setError(null);
+
+      const response = await api.post("/users/register", { username });
+
+      if (
+        response.status === 400 &&
+        response.data.error === "Username already exists"
+      ) {
+        setError("Username already exists");
+        return { error: "Username already exists" };
+      } else {
+        setUser(response.data.newUser);
+        return { message: "New User created" };
+      }
     } catch (error) {
-      setError(
-        "Error occurred while creating a new username: " + error.message
-      );
+      console.error("Error occurred while creating a new username:", error);
+      setError("Error occurred while creating a new username.");
+      return { error: "Error occurred while creating a new username" };
     }
   };
 

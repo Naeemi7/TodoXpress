@@ -11,23 +11,27 @@ export const createUsername = async (req, res) => {
   try {
     const { username } = req.body;
 
+    //Check if the uusername already exists in database
+    const existedUser = await User.findOne({ username });
+
+    if (existedUser) {
+      return res
+        .status(StatusCodes.BAD_REQUEST)
+        .json({ error: "Username already exists" });
+    }
+
+    // Create a new user
     const newUser = await User.create({
       username,
     });
 
-    if (!username) {
-      return res
-        .status(StatusCodes.BAD_REQUEST)
-        .json({ message: "Please Enter a Username" });
-    }
-
     return res
       .status(StatusCodes.CREATED)
-      .json({ message: "New User created", newUser });
+      .json({ message: "User created successfully" });
   } catch (error) {
     return res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ message: "Internal Server Error", error: error.toString() });
+      .json({ error: "Internal Server Error" });
   }
 };
 
