@@ -45,6 +45,11 @@
 
   .home {
     width: 50%;
+
+    h2 {
+      margin-top: 1.5rem;
+      color: $add-button-color;
+    }
     .header {
       margin-top: 1.5rem;
       margin-bottom: 1rem;

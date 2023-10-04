@@ -4,7 +4,7 @@ import useTaskContext from "../context/useTaskContext";
 
 const User = () => {
   const usernameRef = useRef(null);
-  const { createUsername, error } = useTaskContext();
+  const { createUsername } = useTaskContext();
   const [notification, setNotification] = useState("");
   const navigate = useNavigate();
 
@@ -15,25 +15,20 @@ const User = () => {
     // Reset previous notification
     setNotification("");
 
-    if (username.length < 6) {
+    if (username.length <= 6) {
       setNotification("Your username must be at least 6 characters.");
     } else {
       try {
         const response = await createUsername(username);
-        console.log("Response from server:", response);
-        navigate("/home");
 
-        if (response.error === "Username already exists") {
-          // Display the error message to the user
-          setNotification(response.error);
-        } else if (response.message === "Username created successfully!") {
-          setNotification("Username created successfully!");
+        if (response.message === "Exists") {
+          setNotification("The username already exists!");
+          setTimeout(() => {
+            navigate("/home");
+          }, 3000);
         }
       } catch (error) {
-        console.error(
-          "Error occurred while communicating with the server:",
-          error
-        );
+        console.error("Error occurred while communicating with the server:");
         setNotification("Error occurred while communicating with the server.");
       }
     }

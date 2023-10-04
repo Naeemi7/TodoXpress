@@ -16,8 +16,8 @@ export const createUsername = async (req, res) => {
 
     if (existedUser) {
       return res
-        .status(StatusCodes.BAD_REQUEST)
-        .json({ error: "Username already exists" });
+        .status(StatusCodes.OK)
+        .json({ message: "Username already exists", user: existedUser });
     }
 
     // Create a new user
@@ -27,7 +27,7 @@ export const createUsername = async (req, res) => {
 
     return res
       .status(StatusCodes.CREATED)
-      .json({ message: "User created successfully" });
+      .json({ message: "User created successfully", user: newUser });
   } catch (error) {
     return res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
@@ -36,80 +36,111 @@ export const createUsername = async (req, res) => {
 };
 
 /* /**
- * Create a new Task
+ * Create a new Task by User ID
  * @param {*} req
  * @param {*} res
  */
-/* export const createTask = async (req, res) => {
+export const createTask = async (req, res) => {
   try {
+    const { id } = req.params;
     const { title, description } = req.body;
 
-    const newTask = await Todo.create({
-      title,
-      description,
-    });
+    const newTask = await User.findByIdAndUpdate(
+      id,
+      {
+        $push: {
+          tasks: {
+            title,
+            description,
+          },
+        },
+      },
+      { new: true }
+    );
+
+    if (!id) {
+      return res
+        .status(StatusCodes.BAD_REQUEST)
+        .json({ error: "Please Provide User ID" });
+    }
 
     return res
-      .status(StatusCodes.CREATED)
-      .json({ message: "The task is created", newTask });
+      .status(StatusCodes.OK)
+      .json({ message: "New Task Created", newTask });
   } catch (error) {
     return res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ error: error.toString() });
+      .json({ error: "Internal Server Error", error });
   }
-}; */
+};
 
 /**
- * Get all the tasks
+ * Get all the tasks by User ID
  * @param {*} req
  * @param {*} res
  * @returns
  */
-/* export const getAllTasks = async (req, res) => {
+export const getAllTasksByUserId = async (req, res) => {
   try {
-    const tasks = await Todo.find();
+    const { id } = req.params;
+    const tasks = await User.findById(id);
 
-    if (!tasks) {
+    if (!id) {
       return res
-        .status(StatusCodes.NOT_FOUND)
-        .json({ message: "Tasks not found" });
+        .status(StatusCodes.BAD_REQUEST)
+        .json({ error: "Please Provide User ID" });
     }
 
     return res.status(StatusCodes.OK).json({ message: "Tasks found", tasks });
   } catch (error) {
     return res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ error: error.toString() });
+      .json({ error: "Internal Server Error", error });
   }
-}; */
+};
 
 /**
  * Delete the Task
  * @param {*} req
  * @param {*} res
  */
-/* export const deleteTask = async (req, res) => {
+/**
+ * Delete a Task by Task ID for a specific User
+ * @param {*} req
+ * @param {*} res
+ */
+export const deleteTask = async (req, res) => {
   try {
-    const { id } = req.params; // Use req.params to get the task ID from the URL
+    const { userId, taskId } = req.params;
 
-    // Find and delete the task by ID
-    const deletedTask = await Todo.findByIdAndDelete(id);
+    /*    if (!userId || !taskId) {
+      return res
+        .status(StatusCodes.BAD_REQUEST)
+        .json({ error: "Please Provide User ID and Task ID" });
+    } */
 
-    if (!deletedTask) {
+    // Use the positional operator to remove the task by its _id for a specific user
+    const updatedUser = await User.findOneAndUpdate(
+      { _id: userId, "tasks._id": taskId },
+      { $pull: { tasks: { _id: taskId } } },
+      { new: true }
+    );
+
+    if (!updatedUser) {
       return res
         .status(StatusCodes.NOT_FOUND)
-        .json({ message: "Task not found" });
+        .json({ error: "User or Task not found with the provided IDs" });
     }
 
     return res
       .status(StatusCodes.OK)
-      .json({ message: "The task has been deleted", deletedTask });
+      .json({ message: "Task deleted successfully", updatedUser });
   } catch (error) {
     return res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ error: error.toString() });
+      .json({ error: "Internal Server Error", error: error.message });
   }
-}; */
+};
 
 /**
  * Update the task

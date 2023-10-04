@@ -1,20 +1,21 @@
 import { useState, useEffect } from "react";
 import api from "../api/axiosConfig";
+import taskApi from "../api/taskApi";
 import TaskContext from "../context/TaskContext";
 
 const TaskProvider = ({ children }) => {
   const [tasks, setTasks] = useState([]);
-  const [user, setUser] = useState([]);
+  const [userId, setUserId] = useState("");
+  const [userName, setUserName] = useState("");
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchAllTasks = async () => {
       try {
-        const response = await api.get("/tasks");
+        const response = await taskApi.get(`/task/${userId}`);
 
-        if (response.data && Array.isArray(response.data.tasks)) {
-          // Check if response.data.tasks is an array
-          setTasks(response.data.tasks);
+        if (Array.isArray(response.data)) {
+          setTasks(response.data);
           setError(null); // Clear any previous errors
         } else {
           setError("Data structure from the server is incorrect");
@@ -24,25 +25,29 @@ const TaskProvider = ({ children }) => {
       }
     };
 
-    fetchAllTasks();
-  }, []);
+    if (userId) {
+      fetchAllTasks();
+    }
+  }, [userId]);
 
   const createUsername = async (username) => {
     try {
-      // Clear previous error messages
       setError(null);
 
       const response = await api.post("/users/register", { username });
 
       if (
-        response.status === 400 &&
-        response.data.error === "Username already exists"
+        response.status === 200 &&
+        response.data.message === "Username already exists"
       ) {
         setError("Username already exists");
-        return { error: "Username already exists" };
+        setUserName(response.data.user.username);
+        setUserId(response.data.user._id);
+        return { message: "Exists" };
       } else {
-        setUser(response.data.newUser);
-        return { message: "New User created" };
+        setUserName(response.data.user.username);
+        setUserId(response.data.user._id);
+        return { message: "User created successfully" };
       }
     } catch (error) {
       console.error("Error occurred while creating a new username:", error);
@@ -51,11 +56,6 @@ const TaskProvider = ({ children }) => {
     }
   };
 
-  /**
-   * Function to add Tasks
-   * @param {*} taskName
-   * @param {*} taskDescription
-   */
   const addTask = async (taskName, taskDescription) => {
     try {
       const newTask = {
@@ -63,67 +63,49 @@ const TaskProvider = ({ children }) => {
         description: taskDescription,
       };
 
-      await api.post("/create/", newTask, {});
+      await taskApi.patch(`/task/add/${userId}`, newTask, {});
 
-      // Refresh tasks
       refreshTasks();
     } catch (error) {
       setError("Error occurred while creating a new task: " + error.message);
     }
   };
 
-  /**
-   * Function to delete Tasks
-   * @param {*} taskId
-   */
   const deleteTask = async (taskId) => {
     try {
-      await api.delete(`/delete/${taskId}`);
-      // Refresh tasks
+      await taskApi.patch(`/task/delete/userId/${userId}/taskId/${taskId}`);
+
       refreshTasks();
     } catch (error) {
       setError("Error happened deleting the task: " + error.message);
     }
   };
 
-  /**
-   * Function to update Tasks
-   * @param {*} taskId
-   * @param {*} updatedTask
-   */
   const updateTask = async (taskId, updatedTask) => {
     try {
-      await api.put(`/update/${taskId}`, updatedTask);
-      // Refresh tasks
+      await taskApi.put(`/task/update/${taskId}`, updatedTask);
+
       refreshTasks();
     } catch (error) {
       setError("Error happened updating the task: " + error.message);
     }
   };
 
-  /**
-   * Function to mark tasks as done
-   * @param {*} taskId
-   */
   const completeTask = async (taskId) => {
     try {
-      await api.patch(`/complete/${taskId}`);
-      // Refresh Task
+      await taskApi.patch(`/task/complete/${taskId}`);
+
       refreshTasks();
     } catch (error) {
       setError("Error happened marking the task as done: " + error.message);
     }
   };
 
-  /**
-   * Function to refresh the tasks after each update
-   */
   const refreshTasks = async () => {
     try {
-      const response = await api.get("/tasks");
-      const { data } = response;
-      if (data && Array.isArray(data.tasks)) {
-        setTasks(data.tasks);
+      const response = await taskApi.get(`/task/${userId}`);
+      if (Array.isArray(response.data)) {
+        setTasks(response.data);
         setError(null);
       } else {
         setError("Data structure from the server is incorrect during refresh");
@@ -142,7 +124,8 @@ const TaskProvider = ({ children }) => {
         updateTask,
         completeTask,
         createUsername,
-        user,
+        userName,
+        userId,
         error,
       }}
     >
