@@ -1,11 +1,4 @@
 import express from "express";
-/* import {
-  createTask,
-  deleteTask,
-  getAllTasks,
-  updateTask,
-  completeTask,
-} from "../controllers/todoControllers.js"; */
 
 import {
   createUsername,
@@ -22,7 +15,7 @@ router.post("/register", createUsername);
 //Tasks Routes
 router.patch("/task/add/:id", createTask);
 router.get("/task/:id", getAllTasksByUserId);
-router.patch("/task/delete/userId/:id/taskId/:id", deleteTask);
+router.patch("/task/:userId/:taskId", deleteTask);
 
 /* router.get("/", getAllTasks);
 

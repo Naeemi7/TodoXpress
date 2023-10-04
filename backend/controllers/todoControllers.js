@@ -121,25 +121,30 @@ export const getAllTasksByUserId = async (req, res) => {
  */
 export const deleteTask = async (req, res) => {
   try {
-    const { userId, taskId } = req.params;
+    const { userId, taskId } = req.params; // Assuming you have route parameters userId and taskId
 
-    if (!userId || !taskId) {
+    // Check if userId is provided
+    if (!userId) {
       return res
         .status(StatusCodes.BAD_REQUEST)
-        .json({ error: "Please Provide User ID and Task ID" });
+        .json({ error: "Please Provide User ID" });
     }
 
-    // Use the positional operator to remove the task by its _id for a specific user
-    const updatedUser = await User.findOneAndUpdate(
-      { _id: userId, "tasks._id": taskId },
-      { $pull: { tasks: { _id: taskId } } },
+    // Find the user by userId and update the tasks array using $pull
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      {
+        $pull: {
+          tasks: { _id: taskId }, // Use the taskId to identify the task to delete
+        },
+      },
       { new: true }
     );
 
     if (!updatedUser) {
       return res
         .status(StatusCodes.NOT_FOUND)
-        .json({ error: "User or Task not found with the provided IDs" });
+        .json({ error: "User not found" });
     }
 
     return res
@@ -148,7 +153,7 @@ export const deleteTask = async (req, res) => {
   } catch (error) {
     return res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ error: "Internal Server Error", error: error.message });
+      .json({ error: "Internal Server Error", error });
   }
 };
 
