@@ -6,6 +6,7 @@ import {
   getAllTasksByUserId,
   deleteTask,
   updateTask,
+  completeTask,
 } from "../controllers/todoControllers.js";
 
 const router = express.Router();
@@ -18,15 +19,6 @@ router.patch("/task/add/:id", createTask);
 router.get("/task/:id", getAllTasksByUserId);
 router.patch("/task/delete/:userId/:taskId", deleteTask);
 router.patch("/task/update/:userId/:taskId", updateTask);
-
-/* router.get("/", getAllTasks);
-
-router.post("/create", createTask);
-
-router.delete("/delete/:id", deleteTask);
-
-router.put("/update/:id", updateTask);
-
-router.patch("/complete/:id", completeTask); */
+router.patch("/task/complete/:userId/:taskId", completeTask);
 
 export default router;

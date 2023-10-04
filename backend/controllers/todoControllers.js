@@ -110,7 +110,7 @@ export const getAllTasksByUserId = async (req, res) => {
 };
 
 /**
- * Delete the Task
+ * Delete the Task based userId and TaskId
  * @param {*} req
  * @param {*} res
  */
@@ -158,7 +158,7 @@ export const deleteTask = async (req, res) => {
 };
 
 /**
- * Update the task
+ * Update the task based on userId and taskId
  * @param {*} req
  * @param {*} res
  */
@@ -202,37 +202,48 @@ export const updateTask = async (req, res) => {
   }
 };
 /**
- * Find the task by ID and change the completed status to true
+ * Find tasks by userId and taskId and check the status to done
  * @param {*} req
  * @param {*} res
  * @returns
  */
-/* export const completeTask = async (req, res) => {
+export const completeTask = async (req, res) => {
   try {
-    const { id } = req.params;
-    const { completed } = req.body;
+    const { userId, taskId } = req.params;
 
-    //Find the task by ID and change the complete = true
-    const completedTask = await Todo.findByIdAndUpdate(
-      id,
+    // Check if userId is provided
+    if (!userId) {
+      return res
+        .status(StatusCodes.BAD_REQUEST)
+        .json({ error: "Please Provide User ID" });
+    }
+
+    // Find the task by userId and taskId, then change completed to true
+    const completedTask = await User.findOneAndUpdate(
       {
-        completed: true,
+        _id: userId,
+        "tasks._id": taskId,
       },
-      // Set this to true to updated document
+      {
+        $set: {
+          "tasks.$.completed": true,
+        },
+      },
       { new: true }
     );
 
     if (!completedTask) {
-      return res.status(StatusCodes.NOT_FOUND).json({ message: "NOT FOUND" });
+      return res
+        .status(StatusCodes.NOT_FOUND)
+        .json({ message: "Task not found" });
     }
 
     return res
       .status(StatusCodes.OK)
-      .json({ message: "The task has been completed", completeTask });
+      .json({ message: "The task has been completed", completedTask });
   } catch (error) {
     return res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
       .json({ error: error.toString() });
   }
 };
- */

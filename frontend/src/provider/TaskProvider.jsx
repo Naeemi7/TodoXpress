@@ -130,9 +130,13 @@ const TaskProvider = ({ children }) => {
     }
   };
 
+  /**
+   * Funciton to marked tasks as done based on userId and taskId
+   * @param {*} taskId
+   */
   const completeTask = async (taskId) => {
     try {
-      await api.patch(`/task/complete/${taskId}`);
+      await api.patch(`/task/complete/${userId}/${taskId}`);
 
       refreshTasks();
     } catch (error) {
