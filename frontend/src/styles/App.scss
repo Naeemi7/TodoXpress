@@ -347,52 +347,60 @@
       font-size: 2.7rem;
     }
 
-    .header-content {
-      width: 95%;
-      height: 12rem;
-      padding-left: 0;
-      padding-right: 0;
-      margin-left: 0;
-      flex-direction: column;
-      justify-content: center;
-      gap: 1rem;
-
-      input {
-        width: 20rem;
-        height: 2.5rem;
-      }
-
-      .add-btn {
-        height: 2.5rem;
-        font-size: 1rem;
-        width: 7rem;
-      }
-    }
-
-    .task-section {
-      padding: 1.5rem;
+    .home {
       width: 100%;
-      margin-top: 0;
 
-      .task-container {
-        padding: 1rem;
+      .header-container {
+        padding-left: 3rem;
+        padding-right: 3rem;
 
-        .content-container {
-          h2 {
-            font-size: 1.5rem;
+        .header-content {
+          height: 12rem;
+          padding-left: 0;
+          padding-right: 0;
+          margin-left: 0;
+          flex-direction: column;
+          justify-content: center;
+          gap: 1rem;
+
+          input {
+            width: 20rem;
+            height: 2.5rem;
           }
-          p {
-            font-size: 1.2rem;
+
+          .add-btn {
+            height: 2.5rem;
+            font-size: 1rem;
+            width: 7rem;
           }
         }
+      }
 
-        .button-container {
-          display: flex;
-          flex-direction: column;
-          gap: 0.8rem;
+      .task-section {
+        margin-top: 3rem;
+        padding-right: 3rem;
+        padding-left: 3rem;
 
-          .icons {
-            font-size: 1.7rem;
+        .task-container {
+          padding: 1rem;
+
+          .content-container {
+            h2 {
+              font-size: 1.5rem;
+            }
+            p {
+              font-size: 1.2rem;
+            }
+          }
+
+          .button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+
+            .icons {
+              font-size: 1.7rem;
+            }
           }
         }
       }
@@ -409,11 +417,7 @@
       font-size: 2.7rem;
     }
 
-    .header-content {
-      width: 60%;
-    }
-
-    .task-section {
+    .home {
       width: 60%;
     }
   }
