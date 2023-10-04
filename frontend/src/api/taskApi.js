@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const taskApi = axios.create({
-  baseURL: "http://localhost:3000/api/users/task",
+  baseURL: "http://localhost:3000/api/users",
   headers: {
     "Content-Type": "application/json",
   },

@@ -15,10 +15,10 @@ const TaskProvider = ({ children }) => {
   useEffect(() => {
     const fetchAllTasks = async () => {
       try {
-        const response = await taskApi.get(`/${userId}`);
+        const response = await taskApi.get(`/task/${userId}`);
 
-        if (Array.isArray(response.data)) {
-          setTasks(response.data);
+        if (Array.isArray(response.data.tasks)) {
+          setTasks(response.data.tasks);
           setError(null); // Clear any previous errors
         } else {
           setError("Data structure from the server is incorrect");
@@ -115,8 +115,8 @@ const TaskProvider = ({ children }) => {
   const refreshTasks = async () => {
     try {
       const response = await taskApi.get(`/task/${userId}`);
-      if (Array.isArray(response.data)) {
-        setTasks(response.data);
+      if (Array.isArray(response.data.tasks)) {
+        setTasks(response.data.tasks);
         setError(null);
       } else {
         setError("Data structure from the server is incorrect during refresh");
