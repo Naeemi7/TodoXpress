@@ -1,7 +1,6 @@
 import PropTypes from "prop-types";
 import { useState, useEffect } from "react";
 import api from "../api/axiosConfig";
-import taskApi from "../api/taskApi";
 import TaskContext from "../context/TaskContext";
 
 const TaskProvider = ({ children }) => {
@@ -15,7 +14,7 @@ const TaskProvider = ({ children }) => {
   useEffect(() => {
     const fetchAllTasks = async () => {
       try {
-        const response = await taskApi.get(`/task/${userId}`);
+        const response = await api.get(`/task/${userId}`);
 
         if (Array.isArray(response.data.tasks)) {
           setTasks(response.data.tasks);
@@ -37,7 +36,7 @@ const TaskProvider = ({ children }) => {
     try {
       setError(null);
 
-      const response = await api.post("/users/register", { username });
+      const response = await api.post("/register", { username });
 
       if (
         response.status === 200 &&
@@ -74,7 +73,7 @@ const TaskProvider = ({ children }) => {
         description: taskDescription,
       };
 
-      await taskApi.patch(`/task/add/${userId}`, newTask, {});
+      await api.patch(`/task/add/${userId}`, newTask, {});
 
       refreshTasks();
     } catch (error) {
@@ -84,7 +83,7 @@ const TaskProvider = ({ children }) => {
 
   const deleteTask = async (taskId) => {
     try {
-      await taskApi.patch(`/task/delete/userId/${userId}/taskId/${taskId}`);
+      await api.patch(`/task/delete/userId/${userId}/taskId/${taskId}`);
 
       refreshTasks();
     } catch (error) {
@@ -94,7 +93,7 @@ const TaskProvider = ({ children }) => {
 
   const updateTask = async (taskId, updatedTask) => {
     try {
-      await taskApi.put(`/task/update/${taskId}`, updatedTask);
+      await api.put(`/task/update/${taskId}`, updatedTask);
 
       refreshTasks();
     } catch (error) {
@@ -104,7 +103,7 @@ const TaskProvider = ({ children }) => {
 
   const completeTask = async (taskId) => {
     try {
-      await taskApi.patch(`/task/complete/${taskId}`);
+      await api.patch(`/task/complete/${taskId}`);
 
       refreshTasks();
     } catch (error) {
@@ -114,7 +113,7 @@ const TaskProvider = ({ children }) => {
 
   const refreshTasks = async () => {
     try {
-      const response = await taskApi.get(`/task/${userId}`);
+      const response = await api.get(`/task/${userId}`);
       if (Array.isArray(response.data.tasks)) {
         setTasks(response.data.tasks);
         setError(null);
