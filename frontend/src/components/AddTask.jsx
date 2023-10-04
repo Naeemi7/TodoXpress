@@ -21,9 +21,18 @@ const AddTask = () => {
   };
 
   return (
-    <div>
-      <h2>Welcome, {userName}</h2>
+    <div className="header-container">
       <div className="header">
+        <h2 className="welcome">Welcome, {userName}</h2>
+        <div className="logout-btn-container">
+          <FaArrowRightToBracket
+            className="logout-icon"
+            onClick={() => navigate("/")}
+          />
+          <span className="logout-subtext">Logout</span>
+        </div>
+      </div>
+      <div className="header-content">
         <input type="text" placeholder="Task Name" ref={nameRef} />
         <input
           type="text"
@@ -34,14 +43,6 @@ const AddTask = () => {
         <button className="add-btn" onClick={handleAddTask}>
           Add Task
         </button>
-
-        <div className="logout-btn-container">
-          <FaArrowRightToBracket
-            className="logout-icon"
-            onClick={() => navigate("/")}
-          />
-          <span className="logout-subtext">Logout</span>
-        </div>
       </div>
     </div>
   );

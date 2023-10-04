@@ -74,7 +74,7 @@ const DisplayTask = () => {
           {pendingTasks.map((item) => (
             <div key={item._id} className="task-container pending-task">
               <div className="content-container">
-                <h2>{item.title}</h2>
+                <h4 className="task-title">{item.title}</h4>
                 <p>{item.description}</p>
                 <p>{formatDate(item.createdAt)}</p>
               </div>
