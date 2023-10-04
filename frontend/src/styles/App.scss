@@ -1,0 +1,452 @@
+// styles.scss
+@import "variables";
+@import "mixin";
+
+/* Style of the app */
+.app {
+  /* Heading 1 style */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+  h1 {
+    text-align: center;
+    margin-top: 3rem;
+    font-size: 3rem;
+  }
+
+  .user-container {
+    form {
+      @include header-style;
+      display: flex;
+      gap: 1.5rem;
+      input {
+        @include input-style;
+      }
+      button {
+        @include button-style;
+      }
+    }
+
+    .notification {
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out;
+      color: red;
+
+      &.less-than {
+        color: red;
+      }
+      &.exists {
+        color: yellow;
+      }
+      &.success {
+        color: green;
+      }
+    }
+
+    .notification.show {
+      opacity: 1;
+    }
+  }
+
+  .home {
+    width: 50%;
+
+    /* Header Container */
+    .header-container {
+      margin-top: 3.5rem;
+      .header {
+        display: flex;
+        justify-content: space-between;
+
+        .welcome {
+          color: $add-button-color;
+          font-size: 2.3rem;
+        }
+
+        .logout-btn-container {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+
+          .logout-icon {
+            font-size: 2.5rem;
+            color: #d26900;
+            cursor: pointer;
+            transition: color 0.3s;
+
+            &:hover {
+              color: #f57c00;
+            }
+          }
+
+          .logout-subtext {
+            margin-left: 5px;
+            font-size: 1rem;
+            color: transparent;
+            transition: color 0.3s;
+          }
+
+          &:hover {
+            .logout-subtext {
+              color: white;
+            }
+          }
+        }
+      }
+
+      .header-content {
+        @include header-style;
+        margin-top: 0.4rem;
+
+        input {
+          @include input-style;
+        }
+
+        .add-btn {
+          @include button-style;
+        }
+      }
+    }
+
+    /* Task section  */
+    .task-section {
+      width: 100%;
+      margin-top: 1.6rem;
+
+      h3 {
+        font-size: 1.8rem;
+        color: rgba(255, 255, 255, 0.604);
+      }
+
+      .task-container {
+        margin-top: 1rem;
+        height: 9rem;
+        background-color: $secondary-background-color;
+        border-radius: 0.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-left: 2rem;
+        padding-right: 2rem;
+        margin-bottom: 0.4rem;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+
+        /* Content Container */
+        .content-container {
+          .task-title {
+            font-size: 1.5rem;
+            color: $add-button-color;
+          }
+          p {
+            color: #ccc;
+            font-weight: 400;
+          }
+        }
+
+        /* Button Container */
+        .button-container {
+          display: flex;
+          gap: 1.5rem;
+          cursor: pointer;
+
+          .icons {
+            font-size: 2.5rem;
+          }
+          .delete {
+            color: red;
+          }
+          .done {
+            color: green;
+          }
+          .update {
+            color: #0077ff;
+          }
+        }
+
+        &.completed-task {
+          background-color: #2f4f4f;
+        }
+
+        &.pending-task {
+          background-color: $secondary-background-color;
+        }
+      }
+    }
+  }
+}
+
+/* Media query section */
+@media (max-width: #{$small}) {
+  .app {
+    width: 100%;
+
+    h1 {
+      margin-top: 1.5rem;
+      font-size: 2.4rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .user-container {
+      margin-top: 2rem;
+      display: flex;
+      justify-content: center;
+      width: 100%;
+
+      form {
+        margin: 0;
+        height: 140px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+
+        flex-direction: column;
+
+        input {
+          height: 2rem;
+          width: 100%;
+        }
+        button {
+          height: 2rem;
+          font-size: 1rem;
+          width: 6rem;
+        }
+      }
+    }
+
+    .home {
+      width: 100%;
+
+      .header-container {
+        margin-top: 1.5rem;
+        .header {
+          .welcome {
+            font-size: 1.6rem;
+            padding-left: 1.5rem;
+          }
+
+          .logout-btn-container {
+            margin-right: 1.1rem;
+            .logout-icon {
+              font-size: 1.9rem;
+            }
+            .logout-subtext {
+              font-size: 0.8rem;
+            }
+          }
+        }
+        .header-content {
+          height: 12rem;
+          padding-left: 0;
+          padding-right: 0;
+          margin-left: 0;
+          flex-direction: column;
+          justify-content: center;
+          gap: 1rem;
+
+          input {
+            width: 17rem;
+            height: 2rem;
+          }
+
+          .add-btn {
+            height: 2.1rem;
+            font-size: 1rem;
+            width: 6rem;
+          }
+        }
+      }
+
+      .task-section {
+        padding: 1.5rem;
+        width: 100%;
+        margin-top: 0;
+
+        h3 {
+          font-size: 1.5rem;
+        }
+
+        .task-container {
+          padding: 1rem;
+
+          .content-container {
+            .task-title {
+              font-size: 1.3rem;
+            }
+            p {
+              font-size: 1rem;
+            }
+          }
+
+          .button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+
+            .icons {
+              font-size: 1.5rem;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (min-width: 601px) and (max-width: #{$medium}) {
+  .app {
+    width: 100%;
+
+    h1 {
+      margin-top: 1.5rem;
+      font-size: 2.5rem;
+    }
+
+    .home {
+      width: 100%;
+
+      .header-container {
+        .header {
+          padding-left: 2rem;
+          padding-right: 2rem;
+        }
+        .header-content {
+          width: 100%;
+          height: 12rem;
+          padding-left: 0;
+          padding-right: 0;
+          margin-left: 0;
+          flex-direction: column;
+          justify-content: center;
+          gap: 1rem;
+
+          input {
+            width: 17rem;
+            height: 2rem;
+          }
+
+          .add-btn {
+            height: 2.1rem;
+            font-size: 1rem;
+            width: 6rem;
+          }
+        }
+      }
+
+      .task-section {
+        padding: 1.5rem;
+        width: 100%;
+        margin-top: 0;
+
+        .task-container {
+          padding: 1rem;
+
+          .content-container {
+            h2 {
+              font-size: 1.3rem;
+            }
+            p {
+              font-size: 0.9rem;
+            }
+          }
+
+          .button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+
+            .icons {
+              font-size: 1.5rem;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (min-width: 801px) and (max-width: #{$large}) {
+  .app {
+    width: 100%;
+
+    h1 {
+      margin-top: 3rem;
+      font-size: 2.7rem;
+    }
+
+    .home {
+      width: 100%;
+
+      .header-container {
+        padding-left: 3rem;
+        padding-right: 3rem;
+
+        .header-content {
+          height: 12rem;
+          padding-left: 0;
+          padding-right: 0;
+          margin-left: 0;
+          flex-direction: column;
+          justify-content: center;
+          gap: 1rem;
+
+          input {
+            width: 20rem;
+            height: 2.5rem;
+          }
+
+          .add-btn {
+            height: 2.5rem;
+            font-size: 1rem;
+            width: 7rem;
+          }
+        }
+      }
+
+      .task-section {
+        margin-top: 3rem;
+        padding-right: 3rem;
+        padding-left: 3rem;
+
+        .task-container {
+          padding: 1rem;
+
+          .content-container {
+            h2 {
+              font-size: 1.5rem;
+            }
+            p {
+              font-size: 1.2rem;
+            }
+          }
+
+          .button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+
+            .icons {
+              font-size: 1.7rem;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (min-width: 1025px) and (max-width: #{$xlarge}) {
+  .app {
+    width: 100%;
+
+    h1 {
+      margin-top: 3rem;
+      font-size: 2.7rem;
+    }
+
+    .home {
+      width: 70%;
+    }
+  }
+}
