@@ -16,10 +16,10 @@
   }
 
   .user-container {
-    margin-top: 2rem;
     form {
+      @include header-style;
       display: flex;
-      gap: 1rem;
+      gap: 1.5rem;
       input {
         @include input-style;
       }
@@ -51,18 +51,7 @@
       color: $add-button-color;
     }
     .header {
-      margin-top: 1.5rem;
-      margin-bottom: 1rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding-left: 3rem;
-      padding-right: 3rem;
-      width: 100%;
-      height: 6rem;
-      background-color: $secondary-background-color;
-      border-radius: 0.5rem;
-
+      @include header-style;
       input {
         @include input-style;
       }
