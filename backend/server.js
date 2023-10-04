@@ -13,12 +13,20 @@ const port = process.env.PORT || 3000;
 // Parse the JSON body to req.body
 app.use(express.json());
 
-const corsOption = {
+/* const corsOption = {
   origin: "*", // You might want to restrict this to specific origins in a production environment.
   methods: ["HEAD", "GET", "POST", "PATCH", "DELETE", "PUT"],
 };
 
-app.use(cors(corsOption));
+app.use(cors(corsOption)); */
+
+app.use(
+  cors({
+    origin: ["https://depoly-mern01whq.vercel.app"],
+    method: ["POST", "PATCH", "GET"],
+    credentials: true,
+  })
+);
 
 // Connecting to MongoDB
 mongoose
