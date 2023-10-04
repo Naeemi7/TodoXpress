@@ -83,13 +83,23 @@ export const createTask = async (req, res) => {
 export const getAllTasksByUserId = async (req, res) => {
   try {
     const { id } = req.params;
-    const tasks = await User.findById(id);
 
     if (!id) {
       return res
         .status(StatusCodes.BAD_REQUEST)
         .json({ error: "Please Provide User ID" });
     }
+
+    const user = await User.findById(id);
+
+    if (!user) {
+      return res
+        .status(StatusCodes.NOT_FOUND)
+        .json({ error: "User not found with the provided ID" });
+    }
+
+    //Get the tasks array from the user
+    const tasks = user.tasks;
 
     return res.status(StatusCodes.OK).json({ message: "Tasks found", tasks });
   } catch (error) {

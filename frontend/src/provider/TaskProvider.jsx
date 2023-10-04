@@ -15,7 +15,7 @@ const TaskProvider = ({ children }) => {
   useEffect(() => {
     const fetchAllTasks = async () => {
       try {
-        const response = await taskApi.get(`/task/${userId}`);
+        const response = await taskApi.get(`/${userId}`);
 
         if (Array.isArray(response.data)) {
           setTasks(response.data);
