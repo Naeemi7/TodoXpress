@@ -43,11 +43,11 @@ const TaskProvider = ({ children }) => {
         setError("Username already exists");
         setUserName(response.data.user.username);
         setUserId(response.data.user._id);
-        return { message: "Exists" };
+        return { message: 200 };
       } else {
         setUserName(response.data.user.username);
         setUserId(response.data.user._id);
-        return { message: "User created successfully" };
+        return { message: 201 };
       }
     } catch (error) {
       console.error("Error occurred while creating a new username:", error);

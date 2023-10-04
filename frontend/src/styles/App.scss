@@ -27,19 +27,25 @@
         @include button-style;
       }
     }
+
     .notification {
-      padding: 0.5rem;
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out;
       color: red;
-      opacity: 0; /* Start with 0 opacity */
-      transition: opacity 0.3s ease-in-out; /* Add a smooth transition */
+
+      &.less-than {
+        color: red;
+      }
+      &.exists {
+        color: yellow;
+      }
+      &.success {
+        color: green;
+      }
     }
 
     .notification.show {
-      opacity: 1; /* Display the notification with full opacity */
-    }
-
-    .notification.success {
-      color: green; /* Change the text color for success notification */
+      opacity: 1;
     }
   }
 

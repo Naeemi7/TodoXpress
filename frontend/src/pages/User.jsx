@@ -7,6 +7,8 @@ const User = () => {
   const { createUsername } = useTaskContext();
   const [notification, setNotification] = useState("");
   const navigate = useNavigate();
+  const [buttonValue, setButtonValue] = useState("Register");
+  const [notificationClass, setNotificationClass] = useState("");
 
   const handleUsername = async (e) => {
     e.preventDefault();
@@ -14,21 +16,32 @@ const User = () => {
 
     // Reset previous notification
     setNotification("");
+    setNotificationClass("");
 
-    if (username.length <= 6) {
+    if (username.length < 6) {
       setNotification("Your username must be at least 6 characters.");
+      setNotificationClass("less-than");
     } else {
       try {
         const response = await createUsername(username);
 
-        if (response.message === "Exists") {
+        if (response.message === 200) {
+          setNotificationClass("exists");
           setNotification("The username already exists!");
+          setButtonValue("Login");
+
+          setTimeout(() => {
+            navigate("/home");
+          }, 3000);
+        } else if (response.message === 201) {
+          setNotificationClass("success");
+          setNotification("User created successfully!");
+
           setTimeout(() => {
             navigate("/home");
           }, 3000);
         }
       } catch (error) {
-        console.error("Error occurred while communicating with the server:");
         setNotification("Error occurred while communicating with the server.");
       }
     }
@@ -43,9 +56,15 @@ const User = () => {
           placeholder="Enter your username"
           required
         />
-        <button type="submit">Register</button>
+        <button type="submit">{buttonValue}</button>
       </form>
-      <p className={`notification ${notification && "show"}`}>{notification}</p>
+      <p
+        className={`notification ${
+          notificationClass && "show"
+        } ${notificationClass}`}
+      >
+        {notification}
+      </p>
     </div>
   );
 };
