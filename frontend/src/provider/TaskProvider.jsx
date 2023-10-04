@@ -3,6 +3,11 @@ import { useState, useEffect } from "react";
 import api from "../api/axiosConfig";
 import TaskContext from "../context/TaskContext";
 
+/**
+ * Task Provider
+ * @param {*} param0
+ * @returns
+ */
 const TaskProvider = ({ children }) => {
   const [tasks, setTasks] = useState([]);
   const [userId, setUserId] = useState(localStorage.getItem("userId") || "");
@@ -11,6 +16,9 @@ const TaskProvider = ({ children }) => {
   );
   const [error, setError] = useState(null);
 
+  /**
+   * Function to fetch all the tasks
+   */
   useEffect(() => {
     const fetchAllTasks = async () => {
       try {
@@ -32,6 +40,11 @@ const TaskProvider = ({ children }) => {
     }
   }, [userId]);
 
+  /**
+   * Function to create username
+   * @param {*} username
+   * @returns
+   */
   const createUsername = async (username) => {
     try {
       setError(null);
@@ -66,6 +79,11 @@ const TaskProvider = ({ children }) => {
     }
   };
 
+  /**
+   * Function to add task based on the user ID
+   * @param {*} taskName
+   * @param {*} taskDescription
+   */
   const addTask = async (taskName, taskDescription) => {
     try {
       const newTask = {
@@ -81,15 +99,26 @@ const TaskProvider = ({ children }) => {
     }
   };
 
+  /**
+   * Function to delete the task based taskid and userID
+   * @param {*} taskId
+   */
+
   const deleteTask = async (taskId) => {
     try {
-      await api.patch(`/task/delete/userId/${userId}/taskId/${taskId}`);
+      await api.patch(`/task/${userId}/${taskId}`);
 
       refreshTasks();
     } catch (error) {
       setError("Error happened deleting the task: " + error.message);
     }
   };
+
+  /**
+   * Function to update the tasks based User ID and TaskID
+   * @param {*} taskId
+   * @param {*} updatedTask
+   */
 
   const updateTask = async (taskId, updatedTask) => {
     try {
