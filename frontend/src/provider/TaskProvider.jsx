@@ -5,8 +5,10 @@ import TaskContext from "../context/TaskContext";
 
 const TaskProvider = ({ children }) => {
   const [tasks, setTasks] = useState([]);
-  const [userId, setUserId] = useState("");
-  const [userName, setUserName] = useState("");
+  const [userId, setUserId] = useState(localStorage.getItem("userId") || "");
+  const [userName, setUserName] = useState(
+    localStorage.getItem("userName") || ""
+  );
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -43,10 +45,18 @@ const TaskProvider = ({ children }) => {
         setError("Username already exists");
         setUserName(response.data.user.username);
         setUserId(response.data.user._id);
+
+        localStorage.setItem("userId", response.data.user._id);
+        localStorage.setItem("userName", response.data.user.username);
+
         return { message: 200 };
       } else {
         setUserName(response.data.user.username);
         setUserId(response.data.user._id);
+
+        localStorage.setItem("userId", response.data.user._id);
+        localStorage.setItem("userName", response.data.user.username);
+
         return { message: 201 };
       }
     } catch (error) {
