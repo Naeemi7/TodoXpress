@@ -106,7 +106,7 @@ const TaskProvider = ({ children }) => {
 
   const deleteTask = async (taskId) => {
     try {
-      await api.patch(`/task/${userId}/${taskId}`);
+      await api.patch(`/task/delete/${userId}/${taskId}`);
 
       refreshTasks();
     } catch (error) {

@@ -15,7 +15,7 @@ router.post("/register", createUsername);
 //Tasks Routes
 router.patch("/task/add/:id", createTask);
 router.get("/task/:id", getAllTasksByUserId);
-router.patch("/task/:userId/:taskId", deleteTask);
+router.patch("/task/delete/:userId/:taskId", deleteTask);
 
 /* router.get("/", getAllTasks);
 

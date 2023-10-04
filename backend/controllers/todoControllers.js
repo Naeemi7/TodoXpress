@@ -121,7 +121,7 @@ export const getAllTasksByUserId = async (req, res) => {
  */
 export const deleteTask = async (req, res) => {
   try {
-    const { userId, taskId } = req.params; // Assuming you have route parameters userId and taskId
+    const { userId, taskId } = req.params;
 
     // Check if userId is provided
     if (!userId) {
@@ -162,24 +162,34 @@ export const deleteTask = async (req, res) => {
  * @param {*} req
  * @param {*} res
  */
-/* export const updateTask = async (req, res) => {
+export const updateTask = async (req, res) => {
   try {
-    const { id } = req.params;
+    const { userId, taskId } = req.params;
     const { title, description } = req.body;
 
-    //Find the task by id and update
-    const updatedTask = await Todo.findByIdAndUpdate(
-      id, // Use id directly as the first argument
+    // Check if userId is provided
+    if (!userId) {
+      return res
+        .status(StatusCodes.BAD_REQUEST)
+        .json({ error: "Please Provide User ID" });
+    }
+
+    // Find the task by userId and taskId and update it
+    const updatedTask = await User.findOneAndUpdate(
+      { _id: userId, "tasks._id": taskId },
       {
-        title,
-        description,
+        $set: {
+          "tasks.$.title": title,
+          "tasks.$.description": description,
+        },
       },
-      // Set this to true to updated document
       { new: true }
     );
 
     if (!updatedTask) {
-      return res.status(StatusCodes.NOT_FOUND).json({ message: "NOT FOUND" });
+      return res
+        .status(StatusCodes.NOT_FOUND)
+        .json({ message: "Task not found" });
     }
 
     return res
@@ -191,7 +201,6 @@ export const deleteTask = async (req, res) => {
       .json({ error: error.toString() });
   }
 };
- */
 /**
  * Find the task by ID and change the completed status to true
  * @param {*} req
