@@ -122,7 +122,7 @@ const TaskProvider = ({ children }) => {
 
   const updateTask = async (taskId, updatedTask) => {
     try {
-      await api.put(`/task/update/${taskId}`, updatedTask);
+      await api.patch(`/task/update/${userId}/${taskId}`, updatedTask);
 
       refreshTasks();
     } catch (error) {
