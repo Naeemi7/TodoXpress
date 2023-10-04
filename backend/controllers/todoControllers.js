@@ -123,11 +123,11 @@ export const deleteTask = async (req, res) => {
   try {
     const { userId, taskId } = req.params;
 
-    /*    if (!userId || !taskId) {
+    if (!userId || !taskId) {
       return res
         .status(StatusCodes.BAD_REQUEST)
         .json({ error: "Please Provide User ID and Task ID" });
-    } */
+    }
 
     // Use the positional operator to remove the task by its _id for a specific user
     const updatedUser = await User.findOneAndUpdate(

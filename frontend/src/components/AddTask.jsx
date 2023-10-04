@@ -1,11 +1,14 @@
 import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import { FaArrowRightToBracket } from "react-icons/fa6";
 import useTaskContext from "../context/useTaskContext";
 
 const AddTask = () => {
   const nameRef = useRef(null);
   const descriptionRef = useRef(null);
-
   const { addTask, userName } = useTaskContext();
+  const navigate = useNavigate();
+
   const handleAddTask = () => {
     const taskName = nameRef.current.value;
     const taskDescription = descriptionRef.current.value;
@@ -31,6 +34,14 @@ const AddTask = () => {
         <button className="add-btn" onClick={handleAddTask}>
           Add Task
         </button>
+
+        <div className="logout-btn-container">
+          <FaArrowRightToBracket
+            className="logout-icon"
+            onClick={() => navigate("/")}
+          />
+          <span className="logout-subtext">Logout</span>
+        </div>
       </div>
     </div>
   );

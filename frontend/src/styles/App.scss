@@ -50,7 +50,7 @@
   }
 
   .home {
-    width: 50%;
+    width: 53%;
 
     h2 {
       margin-top: 1.5rem;
@@ -58,6 +58,7 @@
     }
     .header {
       @include header-style;
+
       input {
         @include input-style;
       }
@@ -65,10 +66,38 @@
       .add-btn {
         @include button-style;
       }
+      .logout-btn-container {
+        display: flex;
+        align-items: center;
+
+        .logout-icon {
+          font-size: 2.5rem;
+          color: #d26900;
+          cursor: pointer;
+          transition: color 0.3s;
+
+          &:hover {
+            color: #f57c00;
+          }
+        }
+
+        .logout-subtext {
+          margin-left: 5px;
+          font-size: 1rem;
+          color: transparent;
+          transition: color 0.3s;
+        }
+
+        &:hover {
+          .logout-subtext {
+            color: white;
+          }
+        }
+      }
     }
 
     .task-section {
-      width: 50%;
+      width: 100%;
       margin-top: 1.5rem;
 
       h3 {
