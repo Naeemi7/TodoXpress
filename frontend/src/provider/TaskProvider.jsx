@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { useState, useEffect } from "react";
 import api from "../api/axiosConfig";
 import taskApi from "../api/taskApi";
@@ -142,6 +143,11 @@ const TaskProvider = ({ children }) => {
       {children}
     </TaskContext.Provider>
   );
+};
+
+// Validate that children is a valid React node
+TaskProvider.propTypes = {
+  children: PropTypes.node.isRequired,
 };
 
 export default TaskProvider;
