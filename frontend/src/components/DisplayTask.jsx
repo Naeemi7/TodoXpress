@@ -10,6 +10,7 @@ const DisplayTask = () => {
   const [selectedTask, setSelectedTask] = useState(null);
   const [updatedTitle, setUpdatedTitle] = useState("");
   const [updatedDescription, setUpdatedDescription] = useState("");
+  const [showConfirmation, setShowConfirmation] = useState(false); // Add confirmation state
 
   // Function to format a date as Month (string), day, year, and time
   const formatDate = (date) => {
@@ -43,6 +44,21 @@ const DisplayTask = () => {
       setShowUpdateModal(false);
     } catch (error) {
       console.error("Error happened while updating the task", error);
+      // You can display an error message to the user here if needed
+    }
+  };
+
+  const toggleDeleteConfirmation = (task) => {
+    setSelectedTask(task);
+    setShowConfirmation(true); // Show confirmation dialog
+  };
+
+  const handleDelete = async () => {
+    try {
+      await deleteTask(selectedTask._id);
+      setShowConfirmation(false); // Hide confirmation dialog after deleting
+    } catch (error) {
+      console.error("Error happened while deleting the task", error);
       // You can display an error message to the user here if needed
     }
   };
@@ -85,7 +101,7 @@ const DisplayTask = () => {
                 />
                 <FaTimesCircle
                   className="icons delete"
-                  onClick={() => deleteTask(item._id)}
+                  onClick={() => toggleDeleteConfirmation(item)} // Open confirmation dialog
                 />
                 <FaPenToSquare
                   className="icons update"
@@ -96,6 +112,7 @@ const DisplayTask = () => {
           ))}
         </div>
       )}
+
       {completedTasks.length > 0 && (
         <div className="task-section">
           <h3>Completed Tasks</h3>
@@ -113,7 +130,7 @@ const DisplayTask = () => {
                 />
                 <FaTimesCircle
                   className="icons delete"
-                  onClick={() => deleteTask(item._id)}
+                  onClick={() => toggleDeleteConfirmation(item)} // Open confirmation dialog
                 />
                 <FaPenToSquare
                   className="icons update"
@@ -124,6 +141,31 @@ const DisplayTask = () => {
           ))}
         </div>
       )}
+
+      {/* Confirmation Dialog */}
+      <Modal
+        show={showConfirmation}
+        onHide={() => setShowConfirmation(false)}
+        className="custom-modal"
+      >
+        <Modal.Body className="custom-modal-body">
+          <p style={{ color: "red" }}>
+            Are you sure you want to delete this task?
+          </p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="secondary"
+            onClick={() => setShowConfirmation(false)}
+          >
+            Cancel
+          </Button>
+          <Button variant="danger" onClick={handleDelete}>
+            Delete
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
       <Modal
         show={showUpdateModal}
         onHide={() => setShowUpdateModal(false)}
