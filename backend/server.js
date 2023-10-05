@@ -46,10 +46,10 @@ mongoose
 app.use("/api/users", todoRoutes);
 
 //serve our files statically
-app.use(express.static(path.join(__dirname, "frontend/build")));
+app.use(express.static(path.join(__dirname, "../frontend/dist")));
 //any other request made serve the index.html of our production build frontend.
 app.get("*", (req, res) => {
-  res.sendFile(__dirname + "/frontend/build/index.html");
+  res.sendFile(__dirname + "/frontend/dist/index.html");
 });
 
 // The server is listening
