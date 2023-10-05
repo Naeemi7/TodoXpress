@@ -4,6 +4,14 @@ import mongoose from "mongoose";
 import cors from "cors";
 import todoRoutes from "./routes/todoRoutes.js";
 
+//imports for locating our directory (for deployment)
+import { dirname } from "path";
+import { fileURLToPath } from "url";
+import path from "path";
+
+const __filename = fileURLToPath(import.meta.url); // get the current file location of server.js
+const __dirname = dirname(__filename); //extract directory from that location.
+
 // Load .env file and connect it to process.env variable
 dotenv.config();
 
@@ -36,6 +44,14 @@ mongoose
 
 // Register Routes
 app.use("/api/users", todoRoutes);
+
+//serve our files statically
+app.use(express.static(path.join(__dirname, "frontend/build")));
+//any other request made serve the index.html of our production build frontend.
+app.get("*", (req, res) => {
+  res.sendFile(__dirname + "/frontend/build/index.html");
+});
+
 // The server is listening
 app.listen(port, () => {
   console.log("The server is listening on port", port);
