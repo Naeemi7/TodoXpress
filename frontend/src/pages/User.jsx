@@ -32,14 +32,14 @@ const User = () => {
 
           setTimeout(() => {
             navigate("/home");
-          }, 3000);
+          }, 500);
         } else if (response.message === 201) {
           setNotificationClass("success");
           setNotification("User created successfully!");
 
           setTimeout(() => {
             navigate("/home");
-          }, 3000);
+          }, 500);
         }
       } catch (error) {
         setNotification("Error occurred while communicating with the server.");
