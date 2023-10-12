@@ -7,6 +7,7 @@ import {
   deleteTask,
   updateTask,
   completeTask,
+  checkHealth,
 } from "../controllers/todoControllers.js";
 
 const router = express.Router();
@@ -14,6 +15,8 @@ const router = express.Router();
 //User Route
 router.post("/register", createUsername);
 
+//Health check
+router.get("/health", checkHealth);
 //Tasks Routes
 router.patch("/task/add/:id", createTask);
 router.get("/task/:id", getAllTasksByUserId);

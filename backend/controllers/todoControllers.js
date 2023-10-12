@@ -247,3 +247,11 @@ export const completeTask = async (req, res) => {
       .json({ error: error.toString() });
   }
 };
+
+export const checkHealth = (req, res) => {
+  res.status(StatusCodes.OK).json({
+    status: "success",
+    data: null,
+    message: "Health check successful",
+  });
+};
